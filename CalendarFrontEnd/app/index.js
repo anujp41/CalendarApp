@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-console.log('here')
+import Calendar from './Calendar';
 
 ReactDOM.render(
-  <div>Hello, meow!</div>,
+    <Calendar />,
   document.getElementById('app')
 );
