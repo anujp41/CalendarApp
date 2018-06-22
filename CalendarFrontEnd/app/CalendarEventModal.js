@@ -6,18 +6,44 @@ class CalendarEventModal extends Component {
   constructor() {
     super();
     this.handleChange = this.handleChange.bind(this);
+    this.genTimeArray = this.genTimeArray.bind(this);
     this.state = {
       name: '',
       description: '',
       eventDate: '',
-      startTime: '',
-      endTime: ''
+      startTime: null,
+      endTime: null
     }
   }
 
   handleChange(event) {
     const target = event.target;
     this.setState({ [target.name]: target.value });
+  }
+
+  genTimeArray(startTime=0) {
+
+    //inner function created as this is only ingested within genTimeArray method
+    function checkNumLength(num) {
+      const numStr = num.toString();
+      return numStr.length < 2 ? 0+numStr : numStr;
+    }
+
+    const times = []; //set up array to store time in 30min increments
+
+    if (startTime !== 0) {
+      const timeArr = startTime.split(':').map(numStr => parseInt(numStr));
+      startTime = (timeArr[0]*60)+(timeArr[1]);
+    }
+
+    for (let i = startTime; i <= 24*60; i=i+30) {
+      const hour = Math.floor(i/60);
+      const min = i-(hour*60);
+      const currTime = `${checkNumLength(hour)}:${checkNumLength(min)}`;
+      times.push(currTime);
+    }
+
+    return times;
   }
 
   render() {
@@ -31,13 +57,29 @@ class CalendarEventModal extends Component {
         <button className='cancelbtn' onClick={()=>this.props.toggleModal()}>Cancel</button>
         <div className='container containerModal'>
           <form className='formBody' autoComplete="off" onSubmit={this.handleSubmit}>
+            
             <div className='formfield'>
               <input required className="input" type="text" name="name" value={name} onChange={this.handleChange}/>
               <label className="label-text">Name</label>
             </div>
+
             <div className='formfield'>
               <input required className="input" type="text" name="description" value={description} onChange={this.handleChange}/>
               <label className="label-text">Description</label>
+            </div>
+
+            <div className='time-dropdown'>
+              <div className='label-text'>Start Time:</div>
+              <select className='start-dropdown' onChange={this.handleChange}>
+                  {this.genTimeArray().map((time, idx) => <option key={idx}>{time}</option>)}
+                </select>
+            </div>
+
+            <div className='time-dropdown'>
+              <div className='label-text'>Start Time:</div>
+              <select className='start-dropdown' onChange={this.handleChange}>
+                  {this.genTimeArray().map((time, idx) => <option key={idx}>{time}</option>)}
+                </select>
             </div>
 
             {/* <button className='button' type="submit" value="submit">Submit</button> */}

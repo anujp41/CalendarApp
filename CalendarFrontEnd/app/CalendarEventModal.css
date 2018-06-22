@@ -20,7 +20,7 @@
 .containerModal {
   margin: auto;
   text-align: center;
-  background-color: #efe8e8;
+  background-color: #e9efe8;
   font-family: 'Open Sans', sans-serif;
   width: 35vw;
   color: white;
@@ -65,6 +65,15 @@
   transform: translateY(-5px);
 }
 
-/* .input:valid + .label-text {
-  transform: translateY(-5px);
-} */
+.start-date {
+  display: block;
+  margin-bottom: -15px;
+}
+
+.start-dropdown {
+  margin-top: 25px;
+  width: 70px;
+  height: 25px;
+  background-color: #33aa2a;
+  color: white;
+}
