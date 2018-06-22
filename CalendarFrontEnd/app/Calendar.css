@@ -13,3 +13,8 @@
 td {
   height: 75px;
 }
+
+.date:hover {
+  background-color: #8ddce8;
+  cursor: pointer;
+}

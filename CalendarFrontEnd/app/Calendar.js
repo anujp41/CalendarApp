@@ -6,21 +6,26 @@ class CalendarPage extends Component {
 
   constructor() {
     super();
-    this.renderDays = this.renderDays.bind(this);
+    this.renderDaysHeader = this.renderDaysHeader.bind(this);
     this.renderDate = this.renderDate.bind(this);
     this.renderDateRow = this.renderDateRow.bind(this);
     this.renderDateTable = this.renderDateTable.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   }
 
-  renderDays(day) {
+  handleClick(date) {
+    console.log('i am clicked ', date);
+  }
+
+  renderDaysHeader(day) {
     return (
       <th key={day} scope='col' className='col-sm-1 days'>{day}</th>
     )
   }
 
   renderDate(date) {
-    return <td key={date}>{date}</td>;
+    return <td key={date} className='date' onClick={()=>this.handleClick(date)}>{date}</td>;
   }
 
   renderDateRow(num) {
@@ -48,7 +53,7 @@ class CalendarPage extends Component {
         <table className='table'>
           <thead>
             <tr>
-              {this.days.map(this.renderDays)}
+              {this.days.map(this.renderDaysHeader)}
             </tr>
           </thead>
           <tbody>
