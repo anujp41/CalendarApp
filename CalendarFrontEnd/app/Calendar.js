@@ -7,6 +7,9 @@ class CalendarPage extends Component {
   constructor() {
     super();
     this.renderDays = this.renderDays.bind(this);
+    this.renderDate = this.renderDate.bind(this);
+    this.renderDateRow = this.renderDateRow.bind(this);
+    this.renderDateTable = this.renderDateTable.bind(this);
     this.days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   }
 
@@ -14,6 +17,18 @@ class CalendarPage extends Component {
     return (
       <th scope='col' className='col-sm-1 days'>{day}</th>
     )
+  }
+
+  renderDate() {
+    return <td>15</td>;
+  }
+
+  renderDateRow() {
+    return <tr><td>15</td><td>15</td><td>15</td><td>15</td><td>15</td><td>15</td><td>15</td></tr>;
+  }
+
+  renderDateTable() {
+    return [this.renderDateRow(),this.renderDateRow(), this.renderDateRow()];
   }
 
 
@@ -28,24 +43,7 @@ class CalendarPage extends Component {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>2</td>
-              <td>3</td>
-              <td>4</td>
-              <td>5</td>
-              <td>6</td>
-              <td>7</td>
-            </tr>
-            <tr>
-              <td>8</td>
-              <td>9</td>
-              <td>10</td>
-              <td>11</td>
-              <td>12</td>
-              <td>13</td>
-              <td>14</td>
-            </tr>
+            {this.renderDateTable().map(dateRow=>dateRow)}
           </tbody>
         </table>
       </div>
