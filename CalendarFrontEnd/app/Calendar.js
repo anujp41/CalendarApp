@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 import './Calendar.css';
+import CalendarEventModal from './CalendarEventModal';
 
 class CalendarPage extends Component {
 
@@ -11,11 +12,20 @@ class CalendarPage extends Component {
     this.renderDateRow = this.renderDateRow.bind(this);
     this.renderDateTable = this.renderDateTable.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
     this.days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    this.state = {
+      showModal: false,
+      date: null
+    }
   }
 
   handleClick(date) {
-    console.log('i am clicked ', date);
+    this.setState({ showModal: true, date })
+  }
+
+  toggleModal() {
+    this.setState({ showModal: false, date: null })
   }
 
   renderDaysHeader(day) {
@@ -61,25 +71,14 @@ class CalendarPage extends Component {
             {this.renderDateTable().map((dateRow, idx)=><tr key={idx}>{dateRow}</tr>)}
           </tbody>
         </table>
+
+        {this.state.showModal && <CalendarEventModal showModal={this.state.showModal} date={this.state.date} toggleModal={this.toggleModal}/>}
+
+
+
       </div>
     )
   }
 }
 
 export default CalendarPage;
-
-/*
-function callFiveTimes(callback, val) {
-  // let count = 0;
-  (function insideFunc(count=0) {
-    if (count >= 5) return;
-    count++;
-    console.log('count is: ', count);
-    return insideFunc(count);
-  })();
-}
-
-function printThis(val) {
-  return val;
-}
-*/

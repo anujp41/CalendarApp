@@ -1,0 +1,27 @@
+.backdrop {
+  position: fixed;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  background-color: rgba(84, 80, 80, 0.655);
+  padding: 50px;
+  color: #6a2fffb3;
+  overflow: scroll
+}
+
+.cancelbtn {
+  color: #d68306;
+  background-color: #ad2662;
+  margin-left: 65%
+}
+
+.containerModal {
+  margin: auto;
+  text-align: center;
+  background-color: rgb(112, 179, 237);
+  font-family: 'Open Sans', sans-serif;
+  width: 65vw;
+  color: white;
+  padding-bottom: 35px
+}
