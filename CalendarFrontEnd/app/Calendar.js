@@ -19,16 +19,21 @@ class CalendarPage extends Component {
     )
   }
 
-  renderDate() {
-    return <td>15</td>;
+  renderDate(num) {
+    return <td>{num}</td>;
   }
 
-  renderDateRow() {
-    return <tr><td>15</td><td>15</td><td>15</td><td>15</td><td>15</td><td>15</td><td>15</td></tr>;
+  renderDateRow(num) {
+    const dateArray = [this.renderDate(num), this.renderDate(num), this.renderDate(num), this.renderDate(num), this.renderDate(num), this.renderDate(num), this.renderDate(num)];
+    return <tr>{dateArray}</tr>;
   }
 
   renderDateTable() {
-    return [this.renderDateRow(),this.renderDateRow(), this.renderDateRow()];
+    let dateTable = new Array(5);
+    for (let i = 0; i < dateTable.length; i++) {
+      dateTable[i] = this.renderDateRow(i);
+    }
+    return dateTable;
   }
 
 
