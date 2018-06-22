@@ -50,6 +50,7 @@ class CalendarPage extends Component {
   render() {
     return (
       <div className='container calendar'>
+        <div className='month-year'>February 2015</div>
         <table className='table'>
           <thead>
             <tr>

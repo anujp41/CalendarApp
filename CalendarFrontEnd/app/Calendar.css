@@ -1,9 +1,20 @@
-.calendar {
-  background-color: #6ecad8;
+thead {
+  background-color: hsl(79, 76%, 60%);
+}
+
+.month-year {
+  background-color: hsl(79, 76%, 60%);
+  text-align: center;
+  margin: 0;
+  font-size: 2em;
 }
 
 .table {
   margin-bottom: 0
+}
+
+tbody {
+  background-color: #6ecad8;
 }
 
 .days {
