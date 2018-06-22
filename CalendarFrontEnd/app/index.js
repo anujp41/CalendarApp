@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Calendar from './Calendar';
+import CalendarPage from './CalendarPage';
 
 ReactDOM.render(
-    <Calendar />,
+    <CalendarPage />,
   document.getElementById('app')
 );
