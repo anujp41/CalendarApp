@@ -8,7 +8,6 @@ class CalendarEventModal extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.genTimeArray = this.genTimeArray.bind(this);
     this.state = {
-      name: '',
       description: '',
       eventDate: '',
       startTime: '',
@@ -18,7 +17,18 @@ class CalendarEventModal extends Component {
 
   handleChange(event) {
     const target = event.target;
-    this.setState({ [target.name]: target.value });
+    const name = target.name;
+    const value = target.value;
+    if (name === 'startTime' && value === '24:00') {
+      alert('Please select an earlier time as start time!');
+      return;
+    }
+    // if startTime, endTime is also set to the same time
+    if (name==='startTime') {
+      this.setState({ startTime: value, endTime: value });
+    } else {
+      this.setState({ [name] : value});
+    }
   }
 
   genTimeArray(startTime=0) {
@@ -51,17 +61,12 @@ class CalendarEventModal extends Component {
       return null;
     }
     const date = this.props.date;
-    const {name, description, startTime, endTime} = this.state;
+    const {description, startTime, endTime} = this.state;
     return (
       <div className='backdrop'>
         <button className='cancelbtn' onClick={()=>this.props.toggleModal()}>Cancel</button>
         <div className='container containerModal'>
           <form className='formBody' autoComplete="off" onSubmit={this.handleSubmit}>
-
-            <div className='formfield'>
-              <input required className="input" type="text" name="name" value={name} onChange={this.handleChange}/>
-              <label className="label-text">Name</label>
-            </div>
 
             <div className='formfield'>
               <input required className="input" type="text" name="description" value={description} onChange={this.handleChange}/>
@@ -83,7 +88,7 @@ class CalendarEventModal extends Component {
                 </select>
             </div>}
 
-            {endTime !== '' && <button className='button' type="submit" value="submit">Submit</button>}
+            {startTime !== '' && <button className='button' type="submit" value="submit">SUBMIT</button>}
 
           </form>
         </div>
