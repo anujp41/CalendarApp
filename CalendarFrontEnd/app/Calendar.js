@@ -28,7 +28,24 @@ class CalendarPage extends Component {
             </tr>
           </thead>
           <tbody>
-            <td></td>
+            <tr>
+              <th>1</th>
+              <th>2</th>
+              <th>3</th>
+              <th>4</th>
+              <th>5</th>
+              <th>6</th>
+              <th>7</th>
+            </tr>
+            <tr>
+              <th>8</th>
+              <th>9</th>
+              <th>10</th>
+              <th>11</th>
+              <th>12</th>
+              <th>13</th>
+              <th>14</th>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -37,3 +54,19 @@ class CalendarPage extends Component {
 }
 
 export default CalendarPage;
+
+/*
+function callFiveTimes(callback, val) {
+  // let count = 0;
+  (function insideFunc(count=0) {
+    if (count >= 5) return;
+    count++;
+    console.log('count is: ', count);
+    return insideFunc(count);
+  })();
+}
+
+function printThis(val) {
+  return val;
+}
+*/

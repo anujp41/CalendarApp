@@ -9,3 +9,7 @@
 .days {
   text-align: center;
 }
+
+th {
+  height: 50px;
+}
