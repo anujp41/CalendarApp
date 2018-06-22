@@ -15,28 +15,32 @@ class CalendarPage extends Component {
 
   renderDays(day) {
     return (
-      <th scope='col' className='col-sm-1 days'>{day}</th>
+      <th key={day} scope='col' className='col-sm-1 days'>{day}</th>
     )
   }
 
-  renderDate(num) {
-    return <td>{num}</td>;
+  renderDate(date) {
+    return <td key={date}>{date}</td>;
   }
 
   renderDateRow(num) {
-    const dateArray = [this.renderDate(num), this.renderDate(num), this.renderDate(num), this.renderDate(num), this.renderDate(num), this.renderDate(num), this.renderDate(num)];
-    return <tr>{dateArray}</tr>;
+    let dateArray = new Array(7);
+    const maxLength = dateArray.length;
+    for (let i = 0; i < maxLength; i++) {
+      const date = (num*7) + i + 1;
+      dateArray[i] = this.renderDate(date);
+    }
+    return dateArray;
   }
 
   renderDateTable() {
-    let dateTable = new Array(5);
-    for (let i = 0; i < dateTable.length; i++) {
+    let dateTable = new Array(4);
+    const maxLength = dateTable.length;
+    for (let i = 0; i < maxLength; i++) {
       dateTable[i] = this.renderDateRow(i);
     }
     return dateTable;
   }
-
-
 
   render() {
     return (
@@ -48,7 +52,7 @@ class CalendarPage extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.renderDateTable().map(dateRow=>dateRow)}
+            {this.renderDateTable().map((dateRow, idx)=><tr key={idx}>{dateRow}</tr>)}
           </tbody>
         </table>
       </div>
