@@ -11,8 +11,8 @@ class CalendarEventModal extends Component {
       name: '',
       description: '',
       eventDate: '',
-      startTime: null,
-      endTime: null
+      startTime: '',
+      endTime: ''
     }
   }
 
@@ -70,19 +70,20 @@ class CalendarEventModal extends Component {
 
             <div className='time-dropdown'>
               <div className='label-text'>Start Time:</div>
-              <select className='start-dropdown' onChange={this.handleChange}>
+              <select className='start-dropdown' name='startTime' value={startTime} onChange={this.handleChange}>
                   {this.genTimeArray().map((time, idx) => <option key={idx}>{time}</option>)}
                 </select>
             </div>
 
+            {startTime !== '' &&
             <div className='time-dropdown'>
-              <div className='label-text'>Start Time:</div>
-              <select className='start-dropdown' onChange={this.handleChange}>
-                  {this.genTimeArray().map((time, idx) => <option key={idx}>{time}</option>)}
+              <div className='label-text'>End Time:</div>
+              <select className='end-dropdown' name='endTime' value={endTime} onChange={this.handleChange}>
+                  {this.genTimeArray(startTime).map((time, idx) => <option key={idx}>{time}</option>)}
                 </select>
-            </div>
+            </div>}
 
-            {/* <button className='button' type="submit" value="submit">Submit</button> */}
+            {endTime !== '' && <button className='button' type="submit" value="submit">Submit</button>}
 
           </form>
         </div>
