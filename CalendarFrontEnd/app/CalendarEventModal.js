@@ -24,7 +24,7 @@ class CalendarEventModal extends Component {
   genTimeArray(startTime=0) {
 
     //inner function created as this is only ingested within genTimeArray method
-    function checkNumLength(num) {
+    const checkNumLength = num => {
       const numStr = num.toString();
       return numStr.length < 2 ? 0+numStr : numStr;
     }
@@ -57,7 +57,7 @@ class CalendarEventModal extends Component {
         <button className='cancelbtn' onClick={()=>this.props.toggleModal()}>Cancel</button>
         <div className='container containerModal'>
           <form className='formBody' autoComplete="off" onSubmit={this.handleSubmit}>
-            
+
             <div className='formfield'>
               <input required className="input" type="text" name="name" value={name} onChange={this.handleChange}/>
               <label className="label-text">Name</label>
