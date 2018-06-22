@@ -1,3 +1,5 @@
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+
 module.exports = {
   entry: './CalendarFrontEnd/app/index.js',
   mode: 'development',
@@ -20,5 +22,12 @@ module.exports = {
         use: [ 'style-loader', 'css-loader' ]
       }
     ]
-  }
+  },
+  plugins: [
+    new BrowserSyncPlugin({
+      host: 'localhost',
+      port: 3000,
+      server: { baseDir: ['public'] }
+    })
+  ]
 }
