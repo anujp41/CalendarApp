@@ -5,8 +5,9 @@ class CalendarEventModal extends Component {
 
   constructor() {
     super();
-    this.handleChange = this.handleChange.bind(this);
     this.genTimeArray = this.genTimeArray.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
       description: '',
       eventDate: '',
@@ -29,6 +30,11 @@ class CalendarEventModal extends Component {
     } else {
       this.setState({ [name] : value});
     }
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    console.log('submitting: ', this.state);
   }
 
   genTimeArray(startTime=0) {
@@ -69,13 +75,13 @@ class CalendarEventModal extends Component {
           <form className='formBody' autoComplete="off" onSubmit={this.handleSubmit}>
 
             <div className='formfield'>
-              <input required className="input" type="text" name="description" value={description} onChange={this.handleChange}/>
-              <label className="label-text">Description</label>
+              <input required className="input" type="text" name="description" maxLength='55' value={description} onChange={this.handleChange}/>
+              <label className="label-text">Event Description</label>
             </div>
 
             <div className='time-dropdown'>
               <div className='label-text'>Start Time:</div>
-              <select className='start-dropdown' name='startTime' value={startTime} onChange={this.handleChange}>
+              <select className='time-input-dropdown' name='startTime' value={startTime} onChange={this.handleChange}>
                   {this.genTimeArray().map((time, idx) => <option key={idx}>{time}</option>)}
                 </select>
             </div>
@@ -83,7 +89,7 @@ class CalendarEventModal extends Component {
             {startTime !== '' &&
             <div className='time-dropdown'>
               <div className='label-text'>End Time:</div>
-              <select className='end-dropdown' name='endTime' value={endTime} onChange={this.handleChange}>
+              <select className='time-input-dropdown' name='endTime' value={endTime} onChange={this.handleChange}>
                   {this.genTimeArray(startTime).map((time, idx) => <option key={idx}>{time}</option>)}
                 </select>
             </div>}
