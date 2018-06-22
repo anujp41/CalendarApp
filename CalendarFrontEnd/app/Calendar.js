@@ -14,8 +14,8 @@ class CalendarPage extends Component {
     this.toggleModal = this.toggleModal.bind(this);
     this.days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     this.state = {
-      showModal: true,
-      date: 10
+      showModal: false,
+      date: ''
     }
   }
 
@@ -59,6 +59,7 @@ class CalendarPage extends Component {
   render() {
     return (
       <div className='container calendar'>
+        <h1>Hey</h1>
         <div className='month-year'>February 2015</div>
         <table className='table'>
           <thead>
@@ -73,7 +74,10 @@ class CalendarPage extends Component {
 
         {this.state.showModal && <CalendarEventModal showModal={this.state.showModal} date={this.state.date} toggleModal={this.toggleModal}/>}
 
-
+        <div className='tool-tip'>
+          <div className='fa fa-plus add-event' data-toggle='tooltip' data-placement="bottom" title="Tooltip on bottom"></div>
+          <span className="tool-tip-text">Click to add events!</span>
+        </div>
 
       </div>
     )

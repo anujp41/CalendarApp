@@ -21,19 +21,24 @@
   margin: auto;
   text-align: center;
   background-color: #e9efe8;
-  font-family: 'Open Sans', sans-serif;
-  width: 35vw;
+  font-family: 'Verdana', sans-serif;
+  width: 40vw;
   color: white;
   height: 350px;
 }
 
+.modal-title {
+  color: black;
+  /* font-family: 'Verdana'; */
+  font-size: 25px;
+}
+
 .formBody {
-  margin: 10px auto;
+  margin: 0 auto 10px auto;
   width: 100%;
 }
 
 .formfield {
-  margin: 15px auto;
   border-bottom: 1px inset #635e5e;
   padding: 15px 0;
   position: relative;
@@ -54,6 +59,7 @@
 
 .label-text {
   text-align:center;
+  font-family: Cochin, Georgia, Times, 'Times New Roman', serif;
   font-size: 17px;
   transition: all 0.5s;
   color: #918b8b;
@@ -63,6 +69,7 @@
 
 .input:focus + .label-text, .input:valid + .label-text {
   transform: translateY(-5px);
+  color: #dbb081;
 }
 
 .start-date {

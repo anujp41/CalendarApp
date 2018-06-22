@@ -10,7 +10,6 @@ class CalendarEventModal extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
       description: '',
-      eventDate: '',
       startTime: '',
       endTime: ''
     }
@@ -34,11 +33,10 @@ class CalendarEventModal extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log('submitting: ', this.state);
+    const state = {...this.state, eventDate: this.props.date};
   }
 
   genTimeArray(startTime=0) {
-
     //inner function created as this is only ingested within genTimeArray method
     const checkNumLength = num => {
       const numStr = num.toString();
@@ -72,10 +70,11 @@ class CalendarEventModal extends Component {
       <div className='backdrop'>
         <button className='cancelbtn' onClick={()=>this.props.toggleModal()}>Cancel</button>
         <div className='container containerModal'>
+          <h5 className='modal-title'>Enter event below for Feb {date}:</h5>
           <form className='formBody' autoComplete="off" onSubmit={this.handleSubmit}>
 
             <div className='formfield'>
-              <input required className="input" type="text" name="description" maxLength='55' value={description} onChange={this.handleChange}/>
+              <input required className="input" type="text" name="description" maxLength='50' value={description} onChange={this.handleChange}/>
               <label className="label-text">Event Description</label>
             </div>
 

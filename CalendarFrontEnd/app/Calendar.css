@@ -29,3 +29,46 @@ td {
   background-color: #8ddce8;
   cursor: pointer;
 }
+
+.add-event {
+  position: fixed;
+  bottom: 5%;
+  right: 5%;
+  font-size: 48px;
+  color: #65ff65;
+  background-color: red;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+.add-event:hover {
+  transform: rotate(90deg);
+}
+
+.add-event:active {
+  transform: rotate(90deg) translateX(5px);
+}
+
+.tool-tip {
+  display: inline-block;
+}
+
+.tool-tip-text {
+  visibility: hidden;
+  background-color: #798779;
+  color: white;
+  text-align: center;
+  border-radius: 10px;
+  padding: 5px 5px;
+  font-size: 10px;
+  position: fixed;
+  right: 10%;
+  bottom: 10%;
+  z-index: 1;
+}
+
+.add-event:hover + .tool-tip-text {
+  visibility: visible;
+}
