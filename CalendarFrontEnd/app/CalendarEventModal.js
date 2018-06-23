@@ -25,20 +25,16 @@ class CalendarEventModal extends Component {
     const name = target.name;
     const value = target.value;
     if (name === 'startTime' && value === '24:00') {
-      alert('Please select an earlier time as start time!');
+      alert('Please select an earlier time as events must start and end on the same day!');
       return;
     }
-    // if startTime, endTime is also set to the same time
-    // if (name==='startTime') {
-    //   this.setState({ startTime: value, endTime: value });
-    // } else {
-      this.setState({ [name] : value});
-    // }
+    this.setState({ [name] : value});
   }
 
   handleSubmit(event) {
     event.preventDefault();
     this.props.submit(this.state);
+    console.log(this.state);
     this.props.toggleModal();
   }
 

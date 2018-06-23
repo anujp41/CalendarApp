@@ -3,7 +3,7 @@
 const CREATE_EVENT = 'CREATE_EVENT';
 const GET_EVENTS = 'GET_EVENTS';
 
-const initialState = [];
+const initialState = {};
 
 export const createEvent = event => ({ type: CREATE_EVENT, event });
 
@@ -34,7 +34,9 @@ export const getEvents = events => ({ type: GET_EVENTS, events});
 export default function (state = initialState, action) {
   switch (action.type) {
     case CREATE_EVENT:
-      return [...state, action.event];
+      const date = action.event.eventDate;
+      state[date] ? state[date].push(action.event) : state[date] = [action.event];
+      return state;
     case GET_EVENTS:
       return action.events;
     default:
