@@ -13,7 +13,7 @@ class CalendarPage extends Component {
     this.toggleModal = this.toggleModal.bind(this);
     this.days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     this.state = {
-      showModal: false
+      showModal: true
     }
   }
 
@@ -66,7 +66,7 @@ class CalendarPage extends Component {
           </tbody>
         </table>
 
-        {this.state.showModal && <CalendarEventModal showModal={this.state.showModal} date={this.state.date} toggleModal={this.toggleModal}/>}
+        {this.state.showModal && <CalendarEventModal showModal={this.state.showModal} toggleModal={this.toggleModal}/>}
 
         {!this.state.showModal && 
         <div className='tool-tip'>

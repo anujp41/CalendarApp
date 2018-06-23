@@ -5,11 +5,13 @@ class CalendarEventModal extends Component {
 
   constructor() {
     super();
+    this.genDate = this.genDate.bind(this);
     this.genTimeArray = this.genTimeArray.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
       description: '',
+      eventDate: '',
       startTime: '',
       endTime: ''
     }
@@ -33,7 +35,15 @@ class CalendarEventModal extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const state = {...this.state, eventDate: this.props.date};
+    console.log('submitting: ', this.state);
+  }
+
+  genDate() {
+    const dateArray = [];
+    for (let i = 1; i < 29; i++) {
+      dateArray.push(i);
+    }
+    return dateArray;
   }
 
   genTimeArray(startTime=0) {
@@ -64,18 +74,24 @@ class CalendarEventModal extends Component {
     if(!this.props.showModal) {
       return null;
     }
-    const date = this.props.date;
-    const {description, startTime, endTime} = this.state;
+    const {description, eventDate, startTime, endTime} = this.state;
     return (
       <div className='backdrop'>
         <button className='cancelbtn' onClick={()=>this.props.toggleModal()}>Cancel</button>
         <div className='container containerModal'>
-          <h5 className='modal-title'>Enter event below for Feb {date}:</h5>
+          <h5 className='modal-title'>Enter event details below:</h5>
           <form className='formBody' autoComplete="off" onSubmit={this.handleSubmit}>
 
             <div className='formfield'>
               <input required className="input" type="text" name="description" maxLength='50' value={description} onChange={this.handleChange}/>
               <label className="label-text">Event Description</label>
+            </div>
+
+            <div className='time-dropdown'>
+              <div className='label-text'>Event Date:</div>
+              <select className='time-input-dropdown' name='eventDate' value={eventDate} onChange={this.handleChange}>
+                  {this.genDate().map((date, idx) => <option key={idx}>{date}</option>)}
+                </select>
             </div>
 
             <div className='time-dropdown'>
