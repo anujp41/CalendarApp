@@ -5,10 +5,7 @@ const GET_EVENTS = 'GET_EVENTS';
 
 const initialState = [];
 
-export const createEvent = event => {
-  console.log('i am creating ', event);
-  return { type: CREATE_EVENT, event }
-};
+export const createEvent = event => ({ type: CREATE_EVENT, event });
 
 export const getEvents = events => ({ type: GET_EVENTS, events});
 

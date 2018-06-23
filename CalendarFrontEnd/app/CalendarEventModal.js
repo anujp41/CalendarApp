@@ -39,6 +39,7 @@ class CalendarEventModal extends Component {
   handleSubmit(event) {
     event.preventDefault();
     this.props.submit(this.state);
+    this.props.toggleModal();
   }
 
   genDate() {

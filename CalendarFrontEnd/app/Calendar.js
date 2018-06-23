@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Calendar.css';
 import CalendarEventModal from './CalendarEventModal';
+import { connect } from "react-redux";
 
 class CalendarPage extends Component {
 
@@ -13,7 +14,7 @@ class CalendarPage extends Component {
     this.toggleModal = this.toggleModal.bind(this);
     this.days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     this.state = {
-      showModal: true
+      showModal: false
     }
   }
 
@@ -52,6 +53,7 @@ class CalendarPage extends Component {
   }
 
   render() {
+    console.log('store: ', this.props.events);
     return (
       <div className='container calendar'>
         <div className='month-year'>February 2015</div>
@@ -79,4 +81,11 @@ class CalendarPage extends Component {
   }
 }
 
-export default CalendarPage;
+const mapState = state => {
+  return {
+    events: state.events
+  }
+}
+
+const CalendarPageContainer = connect(mapState, null)(CalendarPage);
+export default CalendarPageContainer;
