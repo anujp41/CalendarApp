@@ -25,15 +25,14 @@ class CalendarPage extends Component {
   }
 
   renderDaysHeader(day) {
-    return (
-      <th key={day} scope='col' className='col-sm-1 days'>{day}</th>
-    )
+    return <th key={day} scope='col' className='col-sm-1 days'>{day}</th>;
   }
 
   checkEvents(date) {
     const events = this.props.events;
     if (date in events) {
-      return <div className='event-num'>{events[date].length} events(s) today!</div>
+      console.log('yes ', date);
+      return <div className='event-num'>{events[date].length} events(s) today!</div>;
     }
   }
 
@@ -52,7 +51,7 @@ class CalendarPage extends Component {
   }
 
   renderDateTable() {
-    let dateTable = new Array(4);
+    let dateTable = new Array(6);
     const maxLength = dateTable.length;
     for (let i = 0; i < maxLength; i++) {
       dateTable[i] = this.renderDateRow(i);

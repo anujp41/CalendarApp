@@ -25,11 +25,6 @@ td {
   height: 75px;
 }
 
-/* .date:hover {
-  background-color: #8ddce8;
-  cursor: pointer;
-} */
-
 .add-event {
   position: fixed;
   bottom: 5%;
@@ -43,12 +38,27 @@ td {
   transition: all 0.5s;
 }
 
+.see-event {
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
 .add-event:hover {
   transform: rotate(90deg);
 }
 
 .add-event:active {
   transform: rotate(90deg) translateX(5px);
+}
+
+.event-num {
+  text-align: center;
+  font-size: 8px;
+  margin: 5px 20% 0 20%;
+  cursor: pointer;
+  border-bottom: 1px dotted white;
 }
 
 .tool-tip {
@@ -71,9 +81,4 @@ td {
 
 .add-event:hover + .tool-tip-text {
   visibility: visible;
-}
-
-.event-num {
-  font-size: 8px;
-  padding: 5px 0 0 25px;
 }
