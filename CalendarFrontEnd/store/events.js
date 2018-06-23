@@ -3,7 +3,7 @@
 const CREATE_EVENT = 'CREATE_EVENT';
 const GET_EVENTS = 'GET_EVENTS';
 
-const initialState = {};
+const initialState = {'3': [{description: 'Event', eventDate: '3', startDate: '14:30', endDate: '20:00'}]};
 
 export const createEvent = event => ({ type: CREATE_EVENT, event });
 

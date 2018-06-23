@@ -29,8 +29,15 @@ class CalendarPage extends Component {
     )
   }
 
+  checkEvents(date) {
+    const events = this.props.events;
+    if (date in events) {
+      return <h6>{events[date].length} events(s) today!</h6>
+    }
+  }
+
   renderDate(date) {
-    return <td key={date} className='date'>{date}</td>;
+    return <td key={date} className='date'>{date}{this.checkEvents(date)}</td>;
   }
 
   renderDateRow(num) {
@@ -53,6 +60,7 @@ class CalendarPage extends Component {
   }
 
   render() {
+    console.log('here: ', this.props.events)
     return (
       <div className='container calendar'>
         <div className='month-year'>February 2015</div>
