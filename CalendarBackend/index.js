@@ -3,6 +3,9 @@ const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const path = require("path");
+require('dotenv').config();
+
+console.log('checking: ', process.env.DB_HOST)
 
 app.use(morgan('dev'));
 
