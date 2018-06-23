@@ -79,10 +79,8 @@ class CalendarEventModal extends Component {
     document.addEventListener('mousedown', this.handleClick, false);
   }
 
-  handleClick(e) {
-    console.log('node is ', this.node);
-    console.log('target is ', e.target);
-    if (!(this.node.contains(e.target))) {
+  handleClick(event) {
+    if (this.node && !(this.node.contains(event.target))) {
       this.props.toggleModal();
       return;
     }
@@ -103,6 +101,7 @@ class CalendarEventModal extends Component {
             <div className='formfield'>
               <input required className="input" type="text" name="description" maxLength='50' value={description} onChange={this.handleChange}/>
               <label className="label-text">Event Description</label>
+              <div className='charRem'>{50-description.length} character(s) remaining</div>
             </div>
 
             <div className='time-dropdown'>

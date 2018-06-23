@@ -80,6 +80,14 @@
   color: #dbb081;
 }
 
+.charRem {
+  color: black;
+  position: absolute;
+  top: 65px;
+  right: 10px;;
+  font-size: 9px;
+}
+
 .start-date {
   display: block;
   margin-bottom: -15px;
