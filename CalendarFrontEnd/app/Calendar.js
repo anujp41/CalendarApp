@@ -7,6 +7,7 @@ class CalendarPage extends Component {
 
   constructor() {
     super();
+    this.checkEvents = this.checkEvents.bind(this);
     this.renderDaysHeader = this.renderDaysHeader.bind(this);
     this.renderDate = this.renderDate.bind(this);
     this.renderDateRow = this.renderDateRow.bind(this);
@@ -32,7 +33,7 @@ class CalendarPage extends Component {
   checkEvents(date) {
     const events = this.props.events;
     if (date in events) {
-      return <h6>{events[date].length} events(s) today!</h6>
+      return <div className='event-num'>{events[date].length} events(s) today!</div>
     }
   }
 

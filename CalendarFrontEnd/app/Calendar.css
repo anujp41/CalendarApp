@@ -25,10 +25,10 @@ td {
   height: 75px;
 }
 
-.date:hover {
+/* .date:hover {
   background-color: #8ddce8;
   cursor: pointer;
-}
+} */
 
 .add-event {
   position: fixed;
@@ -71,4 +71,9 @@ td {
 
 .add-event:hover + .tool-tip-text {
   visibility: visible;
+}
+
+.event-num {
+  font-size: 8px;
+  padding: 5px 0 0 25px;
 }
