@@ -29,6 +29,10 @@
   right: 0;
 }
 
+.cancelbtn:active {
+  transform: translateY(5px);
+}
+
 .modal-title {
   color: black;
   font-size: 25px;

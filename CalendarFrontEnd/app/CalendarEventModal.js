@@ -15,6 +15,7 @@ class CalendarEventModal extends Component {
       startTime: '',
       endTime: ''
     }
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleChange(event) {
@@ -70,6 +71,23 @@ class CalendarEventModal extends Component {
     return times;
   }
 
+  componentWillMount() {
+    document.addEventListener('mousedown', this.handleClick, false);
+  }
+
+  componentWillUnmount() {
+    document.addEventListener('mousedown', this.handleClick, false);
+  }
+
+  handleClick(e) {
+    console.log('node is ', this.node);
+    console.log('target is ', e.target);
+    if (!(this.node.contains(e.target))) {
+      this.props.toggleModal();
+      return;
+    }
+  }
+
   render() {
     if(!this.props.showModal) {
       return null;
@@ -77,7 +95,7 @@ class CalendarEventModal extends Component {
     const {description, eventDate, startTime, endTime} = this.state;
     return (
       <div className='backdrop'>
-        <div className='container containerModal'>
+        <div className='container containerModal' ref={node=>this.node=node}>
           <button className='cancelbtn' onClick={()=>this.props.toggleModal()}>Cancel</button>
           <h5 className='modal-title'>Enter event details below:</h5>
           <form className='formBody' autoComplete="off" onSubmit={this.handleSubmit}>
