@@ -10,21 +10,16 @@ class CalendarPage extends Component {
     this.renderDate = this.renderDate.bind(this);
     this.renderDateRow = this.renderDateRow.bind(this);
     this.renderDateTable = this.renderDateTable.bind(this);
-    this.handleClick = this.handleClick.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
     this.days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     this.state = {
-      showModal: false,
-      date: ''
+      showModal: false
     }
   }
 
-  handleClick(date) {
-    this.setState({ showModal: true, date })
-  }
-
   toggleModal() {
-    this.setState({ showModal: false, date: null })
+    const showModal = this.state.showModal;
+    this.setState({ showModal: !showModal })
   }
 
   renderDaysHeader(day) {
@@ -34,7 +29,7 @@ class CalendarPage extends Component {
   }
 
   renderDate(date) {
-    return <td key={date} className='date' onClick={()=>this.handleClick(date)}>{date}</td>;
+    return <td key={date} className='date'>{date}</td>;
   }
 
   renderDateRow(num) {
@@ -59,7 +54,6 @@ class CalendarPage extends Component {
   render() {
     return (
       <div className='container calendar'>
-        <h1>Hey</h1>
         <div className='month-year'>February 2015</div>
         <table className='table'>
           <thead>
@@ -74,10 +68,11 @@ class CalendarPage extends Component {
 
         {this.state.showModal && <CalendarEventModal showModal={this.state.showModal} date={this.state.date} toggleModal={this.toggleModal}/>}
 
+        {!this.state.showModal && 
         <div className='tool-tip'>
-          <div className='fa fa-plus add-event' data-toggle='tooltip' data-placement="bottom" title="Tooltip on bottom"></div>
+          <div className='fa fa-plus add-event' data-toggle='tooltip' data-placement="bottom" title="Tooltip on bottom" onClick={this.toggleModal}></div>
           <span className="tool-tip-text">Click to add events!</span>
-        </div>
+        </div>}
 
       </div>
     )
