@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './CalendarEventModal.css';
+import { connect } from "react-redux";
+import { createEvent } from '../store';
 
 class CalendarEventModal extends Component {
 
@@ -36,7 +38,7 @@ class CalendarEventModal extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log('submitting: ', this.state);
+    this.props.submit(this.state);
   }
 
   genDate() {
@@ -136,4 +138,13 @@ class CalendarEventModal extends Component {
   }
 }
 
-export default CalendarEventModal;
+const mapDispatch = dispatch => {
+  return {
+    submit(event) {
+      dispatch(createEvent(event));
+    }
+  }
+}
+
+const CalendarEventModalContainer = connect(null, mapDispatch)(CalendarEventModal);
+export default CalendarEventModalContainer;
