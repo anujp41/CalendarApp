@@ -53,7 +53,6 @@ class CalendarPage extends Component {
   }
 
   render() {
-    console.log('store: ', this.props.events);
     return (
       <div className='container calendar'>
         <div className='month-year'>February 2015</div>
