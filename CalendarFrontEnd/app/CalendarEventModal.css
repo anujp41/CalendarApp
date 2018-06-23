@@ -10,13 +10,6 @@
   overflow: scroll;
 }
 
-.cancelbtn {
-  position: fixed;
-  color: #d68306;
-  background-color: #ad2662;
-  margin-left: 65%
-}
-
 .containerModal {
   margin: auto;
   text-align: center;
@@ -24,18 +17,29 @@
   font-family: 'Verdana', sans-serif;
   width: 40vw;
   color: white;
-  height: 400px;
+  height: 450px;
+  position: relative;
+}
+
+.cancelbtn {
+  position: absolute;
+  color: #d68306;
+  background-color: #ad2662;
+  top: -25px;
+  right: 0;
 }
 
 .modal-title {
   color: black;
-  /* font-family: 'Verdana'; */
   font-size: 25px;
+  margin-bottom: 20px;
 }
 
 .formBody {
   margin: 0 auto 10px auto;
+  height: 360px;
   width: 100%;
+  background-color: #e9f29b;
 }
 
 .formfield {

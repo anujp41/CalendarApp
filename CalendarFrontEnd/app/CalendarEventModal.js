@@ -77,8 +77,8 @@ class CalendarEventModal extends Component {
     const {description, eventDate, startTime, endTime} = this.state;
     return (
       <div className='backdrop'>
-        <button className='cancelbtn' onClick={()=>this.props.toggleModal()}>Cancel</button>
         <div className='container containerModal'>
+          <button className='cancelbtn' onClick={()=>this.props.toggleModal()}>Cancel</button>
           <h5 className='modal-title'>Enter event details below:</h5>
           <form className='formBody' autoComplete="off" onSubmit={this.handleSubmit}>
 
@@ -94,12 +94,13 @@ class CalendarEventModal extends Component {
                 </select>
             </div>
 
+            {eventDate !== '' &&
             <div className='time-dropdown'>
               <div className='label-text'>Start Time:</div>
               <select className='time-input-dropdown' name='startTime' value={startTime} onChange={this.handleChange}>
                   {this.genTimeArray().map((time, idx) => <option key={idx}>{time}</option>)}
                 </select>
-            </div>
+            </div>}
 
             {startTime !== '' &&
             <div className='time-dropdown'>
