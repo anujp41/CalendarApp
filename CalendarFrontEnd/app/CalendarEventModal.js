@@ -13,9 +13,9 @@ class CalendarEventModal extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
       description: '',
-      eventDate: 'Choose:',
-      startTime: '',
-      endTime: ''
+      eventDate: 'Select:',
+      startTime: 'Select:',
+      endTime: 'Select:'
     }
     this.handleClick = this.handleClick.bind(this);
   }
@@ -29,11 +29,11 @@ class CalendarEventModal extends Component {
       return;
     }
     // if startTime, endTime is also set to the same time
-    if (name==='startTime') {
-      this.setState({ startTime: value, endTime: value });
-    } else {
+    // if (name==='startTime') {
+    //   this.setState({ startTime: value, endTime: value });
+    // } else {
       this.setState({ [name] : value});
-    }
+    // }
   }
 
   handleSubmit(event) {
@@ -43,7 +43,7 @@ class CalendarEventModal extends Component {
   }
 
   genDate() {
-    const dateArray = ['Choose:'];
+    const dateArray = ['Select:'];
     for (let i = 1; i < 29; i++) {
       dateArray.push(i);
     }
@@ -57,7 +57,7 @@ class CalendarEventModal extends Component {
       return numStr.length < 2 ? 0+numStr : numStr;
     }
 
-    const times = []; //set up array to store time in 30min increments
+    const times = ['Select:']; //set up array to store time in 30min increments
 
     if (startTime !== 0) {
       const timeArr = startTime.split(':').map(numStr => parseInt(numStr));
@@ -110,27 +110,27 @@ class CalendarEventModal extends Component {
             <div className='time-dropdown'>
               <div className='label-text'>Event Date:</div>
               <select className='time-input-dropdown' name='eventDate' value={eventDate} onChange={this.handleChange}>
-                  {this.genDate().map((date, idx) => <option key={idx} disabled={date==='Choose:'}>{date}</option>)}
+                  {this.genDate().map((date, idx) => <option key={idx} disabled={date==='Select:'}>{date}</option>)}
                 </select>
             </div>
 
-            {eventDate !== 'Choose:' &&
+            {eventDate !== 'Select:' &&
             <div className='time-dropdown'>
               <div className='label-text'>Start Time:</div>
               <select className='time-input-dropdown' name='startTime' value={startTime} onChange={this.handleChange}>
-                  {this.genTimeArray().map((time, idx) => <option key={idx}>{time}</option>)}
+                  {this.genTimeArray().map((time, idx) => <option key={idx} disabled={time==='Select:'}>{time}</option>)}
                 </select>
             </div>}
 
-            {startTime !== '' &&
+            {startTime !== 'Select:' &&
             <div className='time-dropdown'>
               <div className='label-text'>End Time:</div>
               <select className='time-input-dropdown' name='endTime' value={endTime} onChange={this.handleChange}>
-                  {this.genTimeArray(startTime).map((time, idx) => <option key={idx}>{time}</option>)}
+                  {this.genTimeArray(startTime).map((time, idx) => <option key={idx} disabled={time==='Select:'}>{time}</option>)}
                 </select>
             </div>}
 
-            {startTime !== '' && <button className='button' type="submit" value="submit">SUBMIT</button>}
+            {endTime !== 'Select:' && <button className='button' type="submit" value="submit">SUBMIT</button>}
 
           </form>
         </div>
