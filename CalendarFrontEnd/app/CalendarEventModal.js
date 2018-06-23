@@ -11,7 +11,7 @@ class CalendarEventModal extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
       description: '',
-      eventDate: '',
+      eventDate: 'Choose:',
       startTime: '',
       endTime: ''
     }
@@ -40,7 +40,7 @@ class CalendarEventModal extends Component {
   }
 
   genDate() {
-    const dateArray = [];
+    const dateArray = ['Choose:'];
     for (let i = 1; i < 29; i++) {
       dateArray.push(i);
     }
@@ -107,11 +107,11 @@ class CalendarEventModal extends Component {
             <div className='time-dropdown'>
               <div className='label-text'>Event Date:</div>
               <select className='time-input-dropdown' name='eventDate' value={eventDate} onChange={this.handleChange}>
-                  {this.genDate().map((date, idx) => <option key={idx}>{date}</option>)}
+                  {this.genDate().map((date, idx) => <option key={idx} disabled={date==='Choose:'}>{date}</option>)}
                 </select>
             </div>
 
-            {eventDate !== '' &&
+            {eventDate !== 'Choose:' &&
             <div className='time-dropdown'>
               <div className='label-text'>Start Time:</div>
               <select className='time-input-dropdown' name='startTime' value={startTime} onChange={this.handleChange}>

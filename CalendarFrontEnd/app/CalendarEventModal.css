@@ -83,7 +83,7 @@
 .charRem {
   color: black;
   position: absolute;
-  top: 65px;
+  top: 60px;
   right: 10px;;
   font-size: 9px;
 }
@@ -95,7 +95,7 @@
 
 .time-input-dropdown {
   margin-top: 25px;
-  width: 70px;
+  width: 95px;
   height: 25px;
   background-color: #33aa2a;
   color: white;
