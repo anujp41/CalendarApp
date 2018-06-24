@@ -1,5 +1,4 @@
 import axios from 'axios';
-// import setStatus from './getStatus';
 
 const CREATE_EVENT = 'CREATE_EVENT';
 const GET_EVENTS = 'GET_EVENTS';

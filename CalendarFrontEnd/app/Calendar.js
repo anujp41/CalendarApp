@@ -60,17 +60,16 @@ class CalendarPage extends Component {
     return dateTable;
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.getData();
   }
 
   render() {
-    console.log('props ', this.props);
     if (!this.props.events.getStatus) {
       return (
-        <div>
+        <div className='loader-container'>
           <div className='loader'></div>
-          <span className='load-text'>Loading...</span>
+          <span className='load-text'>Loading your calendar...</span>
         </div>
       )
     } else {

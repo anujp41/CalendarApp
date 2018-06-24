@@ -83,9 +83,17 @@ td {
   visibility: visible;
 }
 
+.loader-container {
+  margin: auto;
+  width: 350px;
+  text-align: center;
+  font-size: 32px;
+}
+
 .loader {
-  border: 16px solid #f3f3f3; /* Light grey */
-  border-top: 16px solid #3498db; /* Blue */
+  margin: auto;
+  border: 16px solid #777673;
+  border-top: 16px solid #efb22f;
   border-radius: 50%;
   width: 120px;
   height: 120px;
