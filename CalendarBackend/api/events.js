@@ -1,10 +1,14 @@
 const router = require('express').Router();
 const { Events } = require('../models');
-const sequelize = require('sequelize');
 
 //function changes database results from simple JSON to complicated that can be used by front-end
 const listFunctions = events => {
-  const eventArr = events.map(event => event.dataValues);
+  let eventArr = [];
+  if (Array.isArray(events)) {
+    eventArr = events.map(event => event.dataValues);
+  } else {
+    eventArr = [events.dataValues];
+  }
   const eventObj = {};
   for (let event of eventArr) {
     eventObj[event.eventDate] ? eventObj[event.eventDate].push(event) : eventObj[event.eventDate] = [event];
@@ -14,16 +18,13 @@ const listFunctions = events => {
 
 router.get('/', function (req, res, next) {
   Events.findAll()
-  .then(events => {
-    const eventsFE = listFunctions(events)
-    return res.json(eventsFE);
-  })
+  .then(events => res.json(listFunctions(events)))
   .catch(next);
 });
 
 router.post('/', function (req, res, next) {
   Events.create(req.body)
-  .then(newEvent => res.json(newEvent))
+  .then(event => res.json(listFunctions(event)))
   .catch(next);
 });
 
