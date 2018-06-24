@@ -1,9 +1,10 @@
 import axios from 'axios';
+// import setStatus from './getStatus';
 
 const CREATE_EVENT = 'CREATE_EVENT';
 const GET_EVENTS = 'GET_EVENTS';
 
-const initialState = {gotEvents: null, events: []};
+const initialState = {getStatus: false, events: []};
 
 export const createEvent = event => ({ type: CREATE_EVENT, event });
 
@@ -16,7 +17,6 @@ export const createEventThunk = event => dispatch =>
 
 export const getEventsThunk = () => dispatch =>
   axios.get('http://localhost:3000/api/events')
-  .then(event => console.log('get is : ', event))
   .then(events => dispatch(getEvents(events.data)))
   .catch(err => console.log(err));
 
@@ -27,7 +27,7 @@ export default function (state = initialState, action) {
       state[date] ? state[date].push(action.event) : state[date] = [action.event];
       return state;
     case GET_EVENTS:
-      return action.events;
+      return {getStatus: true, events: action.events};
     default:
       return state;
   }

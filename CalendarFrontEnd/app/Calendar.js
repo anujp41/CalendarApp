@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import './Calendar.css';
 import CalendarEventModal from './CalendarEventModal';
 import { connect } from "react-redux";
-// import { getEventsThunk } from '../store';
-import { getEvents } from '../store';
+import { getEventsThunk } from '../store';
+// import { getEvents } from '../store';
 
 class CalendarPage extends Component {
 
@@ -61,12 +61,12 @@ class CalendarPage extends Component {
   }
 
   componentWillMount() {
-    this.props.getEvents();
+    this.props.getData();
   }
 
   render() {
-    console.log('props ', this.props.events);
-    if (!true) {
+    console.log('props ', this.props);
+    if (!this.props.events.getStatus) {
       return (
         <div>
           <div className='loader'></div>
@@ -110,8 +110,9 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    getEvents() {
-      dispatch(getEvents([{description: 'Event', eventDate: '10', startTime: '10:30', endTime: '12:30'}]));
+    getData() {
+      // dispatch(getEventsThunk([{description: 'Event', eventDate: '10', startTime: '10:30', endTime: '12:30'}]));
+      dispatch(getEventsThunk());
     }
   }
 }
