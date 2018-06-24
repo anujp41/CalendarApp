@@ -31,7 +31,7 @@ class CalendarPage extends Component {
   }
 
   checkEvents(date) {
-    const events = this.props.events;
+    const {events} = this.props.events;
     if (date in events) {
       return <div className='event-num'>{events[date].length} events(s) today!</div>;
     }

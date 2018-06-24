@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import './CalendarEventModal.css';
 import { connect } from "react-redux";
-// import { createEventThunk } from '../store';
-import { createEvent } from '../store';
+import { createEventThunk } from '../store';
 
 class CalendarEventModal extends Component {
 
@@ -138,7 +137,7 @@ class CalendarEventModal extends Component {
 const mapDispatch = dispatch => {
   return {
     submit(event) {
-      dispatch(createEvent(event));
+      dispatch(createEventThunk(event));
     }
   }
 }
