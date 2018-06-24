@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './Calendar.css';
 import CalendarEventModal from './CalendarEventModal';
 import { connect } from "react-redux";
+// import { getEventsThunk } from '../store';
+import { getEvents } from '../store';
 
 class CalendarPage extends Component {
 
@@ -31,7 +33,6 @@ class CalendarPage extends Component {
   checkEvents(date) {
     const events = this.props.events;
     if (date in events) {
-      console.log('yes ', date);
       return <div className='event-num'>{events[date].length} events(s) today!</div>;
     }
   }
@@ -59,32 +60,45 @@ class CalendarPage extends Component {
     return dateTable;
   }
 
+  componentWillMount() {
+    this.props.getEvents();
+  }
+
   render() {
-    console.log('here: ', this.props.events)
-    return (
-      <div className='container calendar'>
-        <div className='month-year'>February 2015</div>
-        <table className='table'>
-          <thead>
-            <tr>
-              {this.days.map(this.renderDaysHeader)}
-            </tr>
-          </thead>
-          <tbody>
-            {this.renderDateTable().map((dateRow, idx)=><tr key={idx}>{dateRow}</tr>)}
-          </tbody>
-        </table>
-
-        {this.state.showModal && <CalendarEventModal showModal={this.state.showModal} toggleModal={this.toggleModal}/>}
-
-        {!this.state.showModal && 
-        <div className='tool-tip'>
-          <div className='fa fa-plus add-event' data-toggle='tooltip' data-placement="bottom" title="Tooltip on bottom" onClick={this.toggleModal}></div>
-          <span className="tool-tip-text">Click to add events!</span>
-        </div>}
-
-      </div>
-    )
+    console.log('props ', this.props.events);
+    if (!true) {
+      return (
+        <div>
+          <div className='loader'></div>
+          <span className='load-text'>Loading...</span>
+        </div>
+      )
+    } else {
+      return (
+        <div className='container calendar'>
+          <div className='month-year'>February 2015</div>
+          <table className='table'>
+            <thead>
+              <tr>
+                {this.days.map(this.renderDaysHeader)}
+              </tr>
+            </thead>
+            <tbody>
+              {this.renderDateTable().map((dateRow, idx)=><tr key={idx}>{dateRow}</tr>)}
+            </tbody>
+          </table>
+  
+          {this.state.showModal && <CalendarEventModal showModal={this.state.showModal} toggleModal={this.toggleModal}/>}
+  
+          {!this.state.showModal && 
+          <div className='tool-tip'>
+            <div className='fa fa-plus add-event' data-toggle='tooltip' data-placement="bottom" title="Tooltip on bottom" onClick={this.toggleModal}></div>
+            <span className="tool-tip-text">Click to add events!</span>
+          </div>}
+  
+        </div>
+      )
+    }
   }
 }
 
@@ -94,5 +108,13 @@ const mapState = state => {
   }
 }
 
-const CalendarPageContainer = connect(mapState, null)(CalendarPage);
+const mapDispatch = dispatch => {
+  return {
+    getEvents() {
+      dispatch(getEvents([{description: 'Event', eventDate: '10', startTime: '10:30', endTime: '12:30'}]));
+    }
+  }
+}
+
+const CalendarPageContainer = connect(mapState, mapDispatch)(CalendarPage);
 export default CalendarPageContainer;

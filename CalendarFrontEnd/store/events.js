@@ -1,35 +1,24 @@
-// import axios from 'axios';
+import axios from 'axios';
 
 const CREATE_EVENT = 'CREATE_EVENT';
 const GET_EVENTS = 'GET_EVENTS';
 
-const initialState = {'3': [{description: 'Event', eventDate: '3', startDate: '14:30', endDate: '20:00'}]};
+const initialState = {gotEvents: null, events: []};
 
 export const createEvent = event => ({ type: CREATE_EVENT, event });
 
 export const getEvents = events => ({ type: GET_EVENTS, events});
 
-// export const createFurbabyThunk = furbaby => dispatch => {
-//   return axios.post('http://localhost:8080/api/furbabies', furbaby)
-//   .then(newFurbaby => newFurbaby.data)
-//   .then(newKitty => {
-//     newKitty.arrivedDate = new Date(newKitty.arrivedDate);
-//     return newKitty;
-//   })
-//   .then(newFurbaby => dispatch(createFurbaby(newFurbaby)))
-//   .catch(err => console.log(err));
-// }
+export const createEventThunk = event => dispatch => 
+  axios.post('http://localhost:3000/api/events', event)
+  .then(event => dispatch(createEvent(event.data)))
+  .catch(err => console.log(err));
 
-// export const getFurbabiesThunk = () => dispatch =>
-//   axios.get('http://localhost:8080/api/furbabies')
-//   .then(furbabies => furbabies.data)
-//   .then(furbabiesArr => furbabiesArr.map(furbaby => {
-//     furbaby.arrivedDate = new Date(furbaby.arrivedDate);
-//     return furbaby;
-//   }))
-//   .then(furbabies => dispatch(getFurbabies(furbabies)))
-//   .catch(err => console.log(err));
-
+export const getEventsThunk = () => dispatch =>
+  axios.get('http://localhost:3000/api/events')
+  .then(event => console.log('get is : ', event))
+  .then(events => dispatch(getEvents(events.data)))
+  .catch(err => console.log(err));
 
 export default function (state = initialState, action) {
   switch (action.type) {

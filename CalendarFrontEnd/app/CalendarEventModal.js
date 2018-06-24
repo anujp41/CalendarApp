@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './CalendarEventModal.css';
 import { connect } from "react-redux";
+// import { createEventThunk } from '../store';
 import { createEvent } from '../store';
 
 class CalendarEventModal extends Component {
