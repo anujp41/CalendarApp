@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './Calendar.css';
 import CalendarEventModal from './CalendarEventModal';
+import EventListContainer from './EventList';
 import { connect } from "react-redux";
 import { getEventsThunk } from '../store';
 
@@ -79,8 +80,9 @@ class CalendarPage extends Component {
             {this.renderDateTable().map((dateRow, idx)=><tr key={idx}>{dateRow}</tr>)}
           </tbody>
         </table>
-
         {this.state.showModal && <CalendarEventModal showModal={this.state.showModal} toggleModal={this.toggleModal} date={this.state.date}/>}
+
+        <EventListContainer />
 
       </div>
     )
