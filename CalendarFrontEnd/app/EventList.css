@@ -9,6 +9,36 @@
   padding: 20px 20px 0 20px;
 }
 
+.event-date {
+  background-color: hsl(79, 76%, 60%);
+  text-align: center;
+  margin: 0;
+  font-size: 2em;
+}
+
+.event-row {
+  cursor: pointer;
+}
+
+.update-cell {
+  position: relative;
+}
+
+.update-info {
+  position: absolute; 
+  border:1px dotted #e843cc;
+  padding: 2px 25px;
+  background-color: white;
+  top: 30px; 
+  left: 100px;
+  display: none;
+  border-radius: 25px;
+}
+
+.event-row:hover .update-info {
+  display: block;
+}
+
 @media only screen and (max-width: 600px) {
   .event-footer {
     height: 25vh;

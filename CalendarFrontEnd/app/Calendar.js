@@ -71,12 +71,12 @@ class CalendarPage extends Component {
       <div className='container calendar'>
         <div className='month-year'>February 2015</div>
         <table className='table'>
-          <thead>
+          <thead className='calendar-thead'>
             <tr>
               {this.days.map(this.renderDaysHeader)}
             </tr>
           </thead>
-          <tbody>
+          <tbody className='calendar-row'>
             {this.renderDateTable().map((dateRow, idx)=><tr key={idx}>{dateRow}</tr>)}
           </tbody>
         </table>

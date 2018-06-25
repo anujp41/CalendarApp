@@ -105,13 +105,6 @@ class CalendarEventModal extends Component {
               <div className='charRem'>{50-description.length} character(s) remaining</div>
             </div>
 
-            {/* <div className='time-dropdown'>
-              <div className='label-text'>Event Date:</div>
-              <select className='time-input-dropdown' name='eventDate' value={eventDate} onChange={this.handleChange}>
-                  {this.genDate().map((date, idx) => <option key={idx} disabled={date==='Select:'}>{date}</option>)}
-                </select>
-            </div> */}
-
             <div className='time-dropdown'>
               <div className='label-text'>Start Time:</div>
               <select className='time-input-dropdown' name='startTime' value={startTime} onChange={this.handleChange}>
