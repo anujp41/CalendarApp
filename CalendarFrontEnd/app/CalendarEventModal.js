@@ -13,7 +13,6 @@ class CalendarEventModal extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
       description: '',
-      eventDate: 'Select:',
       startTime: 'Select:',
       endTime: 'Select:'
     }
@@ -33,7 +32,10 @@ class CalendarEventModal extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.submit(this.state);
+    const state = this.state;
+    state.eventDate = this.props.date;
+    console.log('state to submit: ', state);
+    this.props.submit(state);
     this.props.toggleModal();
   }
 
@@ -88,12 +90,13 @@ class CalendarEventModal extends Component {
     if(!this.props.showModal) {
       return null;
     }
-    const {description, eventDate, startTime, endTime} = this.state;
+    const {description, startTime, endTime} = this.state;
+    const {date} = this.props;
     return (
       <div className='backdrop'>
         <div className='container containerModal' ref={node=>this.node=node}>
           <button className='cancelbtn' onClick={()=>this.props.toggleModal()}>Cancel</button>
-          <h5 className='modal-title'>Enter event details below:</h5>
+          <h5 className='modal-title'>Enter event details below for Feb {date}:</h5>
           <form className='formBody' autoComplete="off" onSubmit={this.handleSubmit}>
 
             <div className='formfield'>
@@ -102,20 +105,19 @@ class CalendarEventModal extends Component {
               <div className='charRem'>{50-description.length} character(s) remaining</div>
             </div>
 
-            <div className='time-dropdown'>
+            {/* <div className='time-dropdown'>
               <div className='label-text'>Event Date:</div>
               <select className='time-input-dropdown' name='eventDate' value={eventDate} onChange={this.handleChange}>
                   {this.genDate().map((date, idx) => <option key={idx} disabled={date==='Select:'}>{date}</option>)}
                 </select>
-            </div>
+            </div> */}
 
-            {eventDate !== 'Select:' &&
             <div className='time-dropdown'>
               <div className='label-text'>Start Time:</div>
               <select className='time-input-dropdown' name='startTime' value={startTime} onChange={this.handleChange}>
                   {this.genTimeArray().map((time, idx) => <option key={idx} disabled={time==='Select:'}>{time}</option>)}
                 </select>
-            </div>}
+            </div>
 
             {startTime !== 'Select:' &&
             <div className='time-dropdown'>

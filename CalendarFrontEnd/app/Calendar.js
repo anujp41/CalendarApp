@@ -17,23 +17,14 @@ class CalendarPage extends Component {
     this.days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     this.state = {
       showModal: false,
+      date: null,
       events: {}
     }
   }
 
-  // static getDerivedStateFromProps(props, state) {
-  //   console.log('getDerivedStateFromProps', props.events)
-  //   return {events: props.events};
-  // }
-
-  componentWillReceiveProps(nextProps) {
-    console.log('componentWillReceiveProps ', nextProps.events);
-    this.setState({ events: nextProps.events })
-  }
-
-  toggleModal() {
+  toggleModal(date=null) {
     const {showModal} = this.state;
-    this.setState({ showModal: !showModal })
+    this.setState({ showModal: !showModal, date })
   }
 
   renderDaysHeader(day) {
@@ -42,14 +33,13 @@ class CalendarPage extends Component {
 
   checkEvents(date) {
     const { events } = this.props;
-    // console.log('checking for events: ', events)
     if (date in events) {
-      return <div className='event-num'>{this.state.events[date].length} events(s) today!</div>;
+      return <div className='event-num'>{events[date].length} events(s) today!</div>;
     }
   }
 
   renderDate(date) {
-    return <td key={date} className='date'>{date}{this.checkEvents(date)}</td>;
+    return <td key={date} className='date' onClick={()=>this.toggleModal(date)}>{date}{this.checkEvents(date)}</td>;
   }
 
   renderDateRow(num) {
@@ -75,22 +65,7 @@ class CalendarPage extends Component {
     this.props.getData();
   }
 
-  shouldComponentUpdate(nextProps) {
-    // console.log('this.state: ', this.state.events)
-    // console.log('nextProps ', nextProps);
-    return true;
-  }
-
   render() {
-    if (!Object.keys(this.props.events).length > 0) {
-      return (
-        <div className='loader-container'>
-          <div className='loader'></div>
-          <span className='load-text'>Loading your calendar...</span>
-        </div>
-      )
-    }
-    console.log('state events ', this.state.events);
     return (
       <div className='container calendar'>
         <div className='month-year'>February 2015</div>
@@ -105,13 +80,7 @@ class CalendarPage extends Component {
           </tbody>
         </table>
 
-        {this.state.showModal && <CalendarEventModal showModal={this.state.showModal} toggleModal={this.toggleModal}/>}
-
-        {!this.state.showModal && 
-        <div className='tool-tip'>
-          <div className='fa fa-plus add-event' data-toggle='tooltip' data-placement="bottom" title="Tooltip on bottom" onClick={this.toggleModal}></div>
-          <span className="tool-tip-text">Click to add events!</span>
-        </div>}
+        {this.state.showModal && <CalendarEventModal showModal={this.state.showModal} toggleModal={this.toggleModal} date={this.state.date}/>}
 
       </div>
     )
