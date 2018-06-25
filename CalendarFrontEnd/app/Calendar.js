@@ -21,18 +21,9 @@ class CalendarPage extends Component {
     }
   }
 
-  static getDerivedStateFromProps(nextProps, prevState){
-    return {events: nextProps.events};
-    // let {events: eventsInProps} = nextProps;
-    // let {events: eventsInState} = prevState;
-
-    // if (eventsInProps.length !== eventsInState.length) {
-    //   return {events: eventsInProps};
-    // }
-    // else {
-    //   return null;
-    // }
- }
+  static getDerivedStateFromProps(props, state) {
+    return {events: props.events};
+  }
 
   toggleModal() {
     const {showModal} = this.state;
@@ -87,8 +78,7 @@ class CalendarPage extends Component {
         </div>
       )
     }
-    // console.log('props events: ', this.props.events)
-    // console.log('state events ', this.state.events)
+    console.log('state events ', this.state.events);
     return (
       <div className='container calendar'>
         <div className='month-year'>February 2015</div>
