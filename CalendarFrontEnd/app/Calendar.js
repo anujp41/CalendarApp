@@ -54,7 +54,7 @@ class CalendarPage extends Component {
   }
 
   renderDateTable() {
-    let dateTable = new Array(4);
+    let dateTable = new Array(6);
     const maxLength = dateTable.length;
     for (let i = 0; i < maxLength; i++) {
       dateTable[i] = this.renderDateRow(i);
