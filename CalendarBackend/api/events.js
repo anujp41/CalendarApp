@@ -28,6 +28,13 @@ router.post('/', function (req, res, next) {
   .catch(next);
 });
 
+router.delete('/:id', function (req, res, next) {
+  const {id} = req.params;
+  Events.destroy({where: {id}})
+  .then(() => res.sendStatus(204))
+  .catch(next);
+});
+
 // router.put('/:eventId', function (req, res, next) { /* etc */});
 // router.delete('/:eventId', function (req, res, next) { /* etc */});
 

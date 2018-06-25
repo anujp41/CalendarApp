@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './EventList.css';
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
+import { removeEventThunk } from '../store';
 
 class EventList extends Component {
   constructor() {
@@ -8,8 +9,8 @@ class EventList extends Component {
     this.handleRemove = this.handleRemove.bind(this);
   }
 
-  handleRemove(date, id) {
-    console.log('i will remove event#', id, ' from ', date);
+  handleRemove(date, idx, dbId) {
+    this.props.removeEvent(idx, date, dbId);
   }
 
   render() {
@@ -38,7 +39,7 @@ class EventList extends Component {
                   <td className='update-cell'>{eventInfo.description}<span className='update-info'>Click to update!</span></td>
                   <td>{eventInfo.startTime}</td>
                   <td>{eventInfo.endTime}</td>
-                  <td><button onClick={()=>this.handleRemove(date, eventInfo.id)}>X</button></td>
+                  <td><button onClick={()=>this.handleRemove(date, i, eventInfo.id)}>X</button></td>
                 </tr>
               ))}
             </tbody>
@@ -56,5 +57,13 @@ const mapState = state => {
   }
 }
 
-const EventListContainer = connect(mapState, null)(EventList);
+const mapDispatch = dispatch => {
+  return {
+    removeEvent(idx, date, dbId) {
+      dispatch(removeEventThunk(idx, date, dbId));
+    }
+  }
+}
+
+const EventListContainer = connect(mapState, mapDispatch)(EventList);
 export default EventListContainer;
