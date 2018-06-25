@@ -5,6 +5,18 @@ const GET_EVENTS = 'GET_EVENTS';
 
 const initialState = {};
 
+const mergeEventsToState = (priorState, newEvent) => {
+  const resultObj = {};
+  for (let key in priorState) {
+    if (!newEvent[key]) {
+      resultObj[key] = priorState[key];
+    } else {
+      resultObj[key] = [...priorState[key], ...newEvent[key]];
+    }
+  }
+  return resultObj;
+}
+
 export const createEvent = event => ({ type: CREATE_EVENT, event });
 export const getEvents = events => ({ type: GET_EVENTS, events });
 
@@ -22,8 +34,7 @@ export default function (state = initialState, action) {
   switch (action.type) {
     case CREATE_EVENT:
       const date = Object.keys(action.event)[0];
-      state.hasOwnProperty(date) ? state[date].push(action.event[date][0]) : state[date] = action.event[date];
-      return state;
+      return state.hasOwnProperty(date) ? mergeEventsToState(state, action.event) : {...state, ...action.event};
     case GET_EVENTS:
       return action.events;
     default:
