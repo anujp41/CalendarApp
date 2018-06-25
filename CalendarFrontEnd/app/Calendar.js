@@ -21,9 +21,15 @@ class CalendarPage extends Component {
     }
   }
 
-  static getDerivedStateFromProps(props, state) {
+  static getDerivedStateFromProps(props) {
+    // console.log('getDerivedStateFromProps', props.events)
     return {events: props.events};
   }
+
+  // componentWillReceiveProps(nextProps) {
+  //   console.log('componentWillReceiveProps ', nextProps.events);
+  //   this.setState({ events: nextProps.events })
+  // }
 
   toggleModal() {
     const {showModal} = this.state;
@@ -35,10 +41,10 @@ class CalendarPage extends Component {
   }
 
   checkEvents(date) {
-    const { events } = this.props;
-    // console.log('checking for events: ', date, events)
+    const { events } = this.state;
+    // console.log('checking for events: ', events)
     if (date in events) {
-      return <div className='event-num'>{events[date].length} events(s) today!</div>;
+      return <div className='event-num'>{this.state.events[date].length} events(s) today!</div>;
     }
   }
 
@@ -57,7 +63,7 @@ class CalendarPage extends Component {
   }
 
   renderDateTable() {
-    let dateTable = new Array(6);
+    let dateTable = new Array(4);
     const maxLength = dateTable.length;
     for (let i = 0; i < maxLength; i++) {
       dateTable[i] = this.renderDateRow(i);
@@ -69,6 +75,12 @@ class CalendarPage extends Component {
     this.props.getData();
   }
 
+  // shouldComponentUpdate(nextProps) {
+  //   // console.log('this.state: ', this.state.events)
+  //   // console.log('nextProps ', nextProps);
+  //   return true;
+  // }
+
   render() {
     if (!Object.keys(this.props.events).length > 0) {
       return (
@@ -78,7 +90,7 @@ class CalendarPage extends Component {
         </div>
       )
     }
-    console.log('state events ', this.state.events);
+    // console.log('state events ', this.state.events);
     return (
       <div className='container calendar'>
         <div className='month-year'>February 2015</div>

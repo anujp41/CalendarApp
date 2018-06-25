@@ -22,7 +22,7 @@ export default function (state = initialState, action) {
   switch (action.type) {
     case CREATE_EVENT:
       const date = Object.keys(action.event)[0];
-      state.hasOwnProperty(date) ? state[date].push(action.event[date][0]) : state = {...state, ...action.event}
+      state.hasOwnProperty(date) ? state[date].push(action.event[date][0]) : state[date] = action.event[date];
       return state;
     case GET_EVENTS:
       return action.events;
