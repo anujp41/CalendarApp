@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 import './Calendar.css';
 import CalendarEventModal from './CalendarEventModal';
 import EventListContainer from './EventList';
@@ -15,12 +16,14 @@ class CalendarPage extends Component {
     this.renderRow = this.renderRow.bind(this);
     this.renderTable = this.renderTable.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
+    this.updateDateState = this.updateDateState.bind(this);
     this.days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     this.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     this.state = {
       showModal: false,
       date: null,
       events: {},
+      today: null,
       year: null,
       month: null,
       firstDayMonth: null,
@@ -44,13 +47,11 @@ class CalendarPage extends Component {
   //   }
   // }
 
-
   renderCell(cellNum) {
     const { firstDayMonth, lastDateMonth } = this.state;
     // return <td key={date} className='date' onClick={()=>this.toggleModal(date)}>{date}{this.checkEvents(date)}</td>;
-    if (firstDayMonth < cellNum && (cellNum-
-      firstDayMonth) <= lastDateMonth) {
-      return <td key={cellNum} className='date has-date' onClick={()=>this.toggleModal(cellNum-firstDayMonth)}>{cellNum-firstDayMonth}</td>;
+    if (firstDayMonth < cellNum && (cellNum-firstDayMonth) <= lastDateMonth) {
+      return <td key={cellNum} className='date has-date' id='borderless' onClick={()=>this.toggleModal(cellNum-firstDayMonth)}>{cellNum-firstDayMonth}</td>;
     } else {
       return <td key={cellNum} className='date'></td>;
     }
@@ -81,14 +82,19 @@ class CalendarPage extends Component {
 
   componentWillMount() {
     const today = new Date();
-    const year = today.getFullYear();
-    const month = today.getMonth();
+    this.updateDateState(today);
+  }
+
+  updateDateState(today) {
+    const year = moment(today).year();
+    const month = moment(today).month();
     const firstDayMonth = new Date(year, month, 1).getDay();
     const lastDateMonth = new Date(year, month+1, 0).getDate();
-    this.setState({ year, month, firstDayMonth, lastDateMonth });
+    this.setState({ today, year, month, firstDayMonth, lastDateMonth });
   }
 
   render() {
+    console.log(this.state)
     return (
       <div className='container calendar'>
         <div className='month-year'>{this.months[this.state.month]} {this.state.year}</div>

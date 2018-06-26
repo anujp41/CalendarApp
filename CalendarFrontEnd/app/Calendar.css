@@ -34,6 +34,10 @@
   cursor: pointer;
 }
 
+#borderless {
+  border: none;
+}
+
 .add-event {
   position: fixed;
   bottom: 5%;
