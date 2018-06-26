@@ -5,18 +5,19 @@ import { createEventThunk } from '../store';
 
 class CalendarEventModal extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.genDate = this.genDate.bind(this);
     this.genTimeArray = this.genTimeArray.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.state = {
-      description: '',
-      startTime: 'Select:',
-      endTime: 'Select:'
-    }
     this.handleClick = this.handleClick.bind(this);
+    this.state = {
+      description: this.props.method === 'submit'? '' : 'Some value',
+      eventDate: this.props.method === 'submit' ? null : 'Some Date',
+      startTime: this.props.method === 'submit' ? 'Select:' : 'Other value',
+      endTime: this.props.method === 'submit' ? 'Select:' : 'Some other value',
+    }
   }
 
   handleChange(event) {
@@ -33,9 +34,12 @@ class CalendarEventModal extends Component {
   handleSubmit(event) {
     event.preventDefault();
     const state = this.state;
-    state.eventDate = this.props.date;
-    console.log('state to submit: ', state);
-    this.props.submit(state);
+    if (this.props.method==='submit') {
+      state.eventDate = this.props.date;
+      this.props.submit(state);
+    } else {
+      this.props.update(state);
+    }
     this.props.toggleModal();
   }
 
@@ -90,13 +94,17 @@ class CalendarEventModal extends Component {
     if(!this.props.showModal) {
       return null;
     }
-    const {description, startTime, endTime} = this.state;
-    const {date} = this.props;
+    const {description, eventDate, startTime, endTime} = this.state;
+    const {date, method} = this.props;
     return (
       <div className='backdrop'>
         <div className='container containerModal' ref={node=>this.node=node}>
           <button className='cancelbtn' onClick={()=>this.props.toggleModal()}>Cancel</button>
-          <h5 className='modal-title'>Enter event details below for Feb {date}:</h5>
+
+          {method === 'submit' ?
+            <h5 className='modal-title'>Enter event details below for Feb {date}:</h5>
+          : <h5 className='modal-title'>Update your event below:</h5>}
+
           <form className='formBody' autoComplete="off" onSubmit={this.handleSubmit}>
 
             <div className='formfield'>
@@ -104,6 +112,14 @@ class CalendarEventModal extends Component {
               <label className="label-text">Event Description</label>
               <div className='charRem'>{50-description.length} character(s) remaining</div>
             </div>
+
+            {method!=='submit' ? 
+            <div className='formfield'>
+              <input required className="input" type="text" name="description" maxLength='50' value={description} onChange={this.handleChange}/>
+              <label className="label-text">Event Description</label>
+              <div className='charRem'>{50-description.length} character(s) remaining</div>
+            </div>
+            :null}
 
             <div className='time-dropdown'>
               <div className='label-text'>Start Time:</div>
@@ -120,7 +136,7 @@ class CalendarEventModal extends Component {
                 </select>
             </div>}
 
-            {endTime !== 'Select:' && <button className='button' type="submit" value="submit">SUBMIT</button>}
+            {endTime !== 'Select:' && <button className='button' type="submit" value="submit">{method}</button>}
 
           </form>
         </div>
@@ -133,6 +149,9 @@ const mapDispatch = dispatch => {
   return {
     submit(event) {
       dispatch(createEventThunk(event));
+    },
+    update(event) {
+      console.log('i will update');
     }
   }
 }

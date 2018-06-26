@@ -2,11 +2,21 @@ import React, { Component } from 'react';
 import './EventList.css';
 import { connect } from 'react-redux';
 import { removeEventThunk } from '../store';
+import CalendarEventModal from './CalendarEventModal';
 
 class EventList extends Component {
   constructor() {
     super();
     this.handleRemove = this.handleRemove.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
+    this.state = {
+      updating: false
+    }
+  }
+
+  toggleModal(date=null) {
+    const {showModal} = this.state;
+    this.setState({ showModal: !showModal, date })
   }
 
   handleRemove(date, idx, dbId) {
@@ -46,6 +56,7 @@ class EventList extends Component {
           </table>  
           </div>
         ))}
+        <CalendarEventModal method='update' showModal={this.state.updating}/>
       </div>
     )
   }

@@ -6,7 +6,7 @@ import store from '../store';
 
 ReactDOM.render(
   <Provider store={store}>
-    <CalendarPage />
+    <CalendarPage/>
   </Provider>,
   document.getElementById('app')
 );

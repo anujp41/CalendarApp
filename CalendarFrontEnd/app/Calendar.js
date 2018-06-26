@@ -54,7 +54,7 @@ class CalendarPage extends Component {
   }
 
   renderDateTable() {
-    let dateTable = new Array(6);
+    let dateTable = new Array(4);
     const maxLength = dateTable.length;
     for (let i = 0; i < maxLength; i++) {
       dateTable[i] = this.renderDateRow(i);
@@ -80,7 +80,7 @@ class CalendarPage extends Component {
             {this.renderDateTable().map((dateRow, idx)=><tr key={idx}>{dateRow}</tr>)}
           </tbody>
         </table>
-        {this.state.showModal && <CalendarEventModal showModal={this.state.showModal} toggleModal={this.toggleModal} date={this.state.date}/>}
+        {this.state.showModal && <CalendarEventModal method='submit' showModal={this.state.showModal} toggleModal={this.toggleModal} date={this.state.date}/>}
 
         <EventListContainer />
 

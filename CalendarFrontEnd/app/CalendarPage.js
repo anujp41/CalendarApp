@@ -7,7 +7,7 @@ class CalendarPage extends Component {
     return (
       <div>
         <Header/>
-        <Calendar />
+        <Calendar/>
       </div>
     )
   }
