@@ -90,19 +90,21 @@ class CalendarPage extends Component {
   }
 }
 
-const mapState = state => {
-  return {
-    events: state.events
-  }
-}
+export default CalendarPage;
 
-const mapDispatch = dispatch => {
-  return {
-    getData() {
-      dispatch(getEventsThunk());
-    }
-  }
-}
+// const mapState = state => {
+//   return {
+//     events: state.events
+//   }
+// }
 
-const CalendarPageContainer = connect(mapState, mapDispatch)(CalendarPage);
-export default CalendarPageContainer;
+// const mapDispatch = dispatch => {
+//   return {
+//     getData() {
+//       dispatch(getEventsThunk());
+//     }
+//   }
+// }
+
+// const CalendarPageContainer = connect(mapState, mapDispatch)(CalendarPage);
+// export default CalendarPageContainer;
