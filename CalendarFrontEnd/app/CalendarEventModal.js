@@ -13,10 +13,14 @@ class CalendarEventModal extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.state = {
-      description: this.props.method === 'submit'? '' : this.props.event.description,
-      eventDate: this.props.method === 'submit' ? null : this.props.event.eventDate,
-      startTime: this.props.method === 'submit' ? 'Select:' : this.props.event.startTime,
-      endTime: this.props.method === 'submit' ? 'Select:' : this.props.event.endTime
+      // description: this.props.method === 'submit'? '' : this.props.event.description,
+      // eventDate: this.props.method === 'submit' ? null : this.props.event.eventDate,
+      // startTime: this.props.method === 'submit' ? 'Select:' : this.props.event.startTime,
+      // endTime: this.props.method === 'submit' ? 'Select:' : this.props.event.endTime
+      description: '',
+      eventDate: null,
+      startTime: 'Select:',
+      endTime: 'Select:'
     }
   }
 
@@ -77,6 +81,13 @@ class CalendarEventModal extends Component {
 
   componentWillMount() {
     document.addEventListener('mousedown', this.handleClick, false);
+    this.props.method !== 'submit' &&
+    this.setState({
+      description: this.props.event.description,
+      eventDate: this.props.event.eventDate,
+      startTime: this.props.event.startTime,
+      endTime: this.props.event.endTime
+    })
   }
 
   componentWillUnmount() {
@@ -91,7 +102,7 @@ class CalendarEventModal extends Component {
   }
 
   render() {
-    console.log('event updating is ', this.props.event);
+    console.log('event updating is ', this.state.eventDate);
     if(!this.props.showModal) {
       return null;
     }
@@ -117,7 +128,7 @@ class CalendarEventModal extends Component {
             {method!=='submit' &&
             <div className='time-dropdown'>
               <div className='label-text'>Event Date:</div>
-              <select className='time-input-dropdown' name='startTime' value={eventDate} onChange={this.handleChange}>
+              <select className='time-input-dropdown' name='eventDate' value={eventDate} onChange={this.handleChange}>
                   {this.genDate().map((date, idx) => <option key={idx} defaultValue={eventDate}>{date}</option>)}
                 </select>
             </div>}
@@ -152,7 +163,7 @@ const mapDispatch = dispatch => {
       dispatch(createEventThunk(event));
     },
     update(event) {
-      console.log('i will update');
+      console.log('i will update ', event);
     }
   }
 }
