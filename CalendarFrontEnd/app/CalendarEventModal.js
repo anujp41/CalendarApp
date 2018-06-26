@@ -13,10 +13,10 @@ class CalendarEventModal extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.state = {
-      description: this.props.method === 'submit'? '' : 'Some value',
-      eventDate: this.props.method === 'submit' ? null : 'Some Date',
-      startTime: this.props.method === 'submit' ? 'Select:' : 'Other value',
-      endTime: this.props.method === 'submit' ? 'Select:' : 'Some other value',
+      description: this.props.method === 'submit'? '' : this.props.event.description,
+      eventDate: this.props.method === 'submit' ? null : this.props.event.eventDate,
+      startTime: this.props.method === 'submit' ? 'Select:' : this.props.event.startTime,
+      endTime: this.props.method === 'submit' ? 'Select:' : this.props.event.endTime
     }
   }
 
@@ -44,7 +44,7 @@ class CalendarEventModal extends Component {
   }
 
   genDate() {
-    const dateArray = ['Select:'];
+    const dateArray = [];
     for (let i = 1; i < 29; i++) {
       dateArray.push(i);
     }
@@ -91,6 +91,7 @@ class CalendarEventModal extends Component {
   }
 
   render() {
+    console.log('event updating is ', this.props.event);
     if(!this.props.showModal) {
       return null;
     }
@@ -101,8 +102,8 @@ class CalendarEventModal extends Component {
         <div className='container containerModal' ref={node=>this.node=node}>
           <button className='cancelbtn' onClick={()=>this.props.toggleModal()}>Cancel</button>
 
-          {method === 'submit' ?
-            <h5 className='modal-title'>Enter event details below for Feb {date}:</h5>
+          {method === 'submit' 
+          ? <h5 className='modal-title'>Enter event details below for Feb {date}:</h5>
           : <h5 className='modal-title'>Update your event below:</h5>}
 
           <form className='formBody' autoComplete="off" onSubmit={this.handleSubmit}>
@@ -113,13 +114,13 @@ class CalendarEventModal extends Component {
               <div className='charRem'>{50-description.length} character(s) remaining</div>
             </div>
 
-            {method!=='submit' ? 
-            <div className='formfield'>
-              <input required className="input" type="text" name="description" maxLength='50' value={description} onChange={this.handleChange}/>
-              <label className="label-text">Event Description</label>
-              <div className='charRem'>{50-description.length} character(s) remaining</div>
-            </div>
-            :null}
+            {method!=='submit' &&
+            <div className='time-dropdown'>
+              <div className='label-text'>Event Date:</div>
+              <select className='time-input-dropdown' name='startTime' value={eventDate} onChange={this.handleChange}>
+                  {this.genDate().map((date, idx) => <option key={idx} defaultValue={eventDate}>{date}</option>)}
+                </select>
+            </div>}
 
             <div className='time-dropdown'>
               <div className='label-text'>Start Time:</div>
