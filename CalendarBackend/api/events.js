@@ -32,7 +32,7 @@ router.put('/:id', (req, res, next) => {
   let id = req.params.id;
   Events.findById(id)
       .then(event => event.update(req.body))
-      .then(updatedEvent => res.json(updatedEvent))
+      .then(updatedEvent => res.json(listFunctions(updatedEvent)))
       .catch(next)
 })
 

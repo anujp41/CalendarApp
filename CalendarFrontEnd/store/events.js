@@ -19,6 +19,16 @@ const mergeEventsToState = (priorState, newEvent) => {
   return resultObj;
 }
 
+const updateState = (state, date, index, event=null, newDate=null) => {
+  if (event===null) {
+    state[date].splice(index,1);
+    if (state[date].length === 0) delete state[date];
+  } else {
+    state[date].splice(index,1,event[newDate][0]);
+  }
+  return Object.assign({}, state);
+}
+
 export const createEvent = event => ({ type: CREATE_EVENT, event });
 export const getEvents = events => ({ type: GET_EVENTS, events });
 export const updateEvent = (event, date, idx) => ({ type: UPDATE_EVENT, event, date, idx });
@@ -55,19 +65,15 @@ export default function (state = initialState, action) {
       return action.events;
     case UPDATE_EVENT:
       const initialDate = action.date;
-      const currEventDate = action.event.eventDate;
+      const currEventDate = Object.keys(action.event)[0];
       if (initialDate === currEventDate) {
-        state[initialDate].splice(action.idx,1,action.event);
-        return Object.assign({}, state);
+        return updateState(state, initialDate, action.idx, action.event, currEventDate);
       } else {
-        state[initialDate].splice(action.idx,1);
-        if (state[initialDate].length === 0) delete state[initialDate];  
-        return state.hasOwnProperty(currEventDate) ? mergeEventsToState(state, {[currEventDate]: [action.event]}) : {...state, [currEventDate]: [action.event]};
+        const updatedState = updateState(state, initialDate, action.idx);
+        return updatedState.hasOwnProperty(currEventDate) ? mergeEventsToState(updatedState, action.event) : {...updatedState, ...action.event};
       }
     case REMOVE_EVENT:
-      state[action.date].splice(action.idx,1);
-      if (state[action.date].length === 0) delete state[action.date];
-      return Object.assign({}, state);
+      return updateState(state, action.date, action.idx);
     default:
       return state;
   }

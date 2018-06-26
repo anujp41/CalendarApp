@@ -49,10 +49,10 @@ class EventList extends Component {
             </thead>
             <tbody>
               {events[date].map((eventInfo, i) => (
-                <tr key={i} className='event-row' onClick={()=>this.toggleModal(eventInfo, i)}>
-                  <td className='update-cell'>{eventInfo.description}<span className='update-info'>Click to update!</span></td>
-                  <td>{eventInfo.startTime}</td>
-                  <td>{eventInfo.endTime}</td>
+                <tr key={i} className='event-row'>
+                  <td className='update-cell' onClick={()=>this.toggleModal(eventInfo, i)}>{eventInfo.description}<span className='update-info'>Click to update!</span></td>
+                  <td onClick={()=>this.toggleModal(eventInfo, i)}>{eventInfo.startTime}</td>
+                  <td onClick={()=>this.toggleModal(eventInfo, i)}>{eventInfo.endTime}</td>
                   <td><button onClick={()=>this.handleRemove(date, i, eventInfo.id)}>X</button></td>
                 </tr>
               ))}
