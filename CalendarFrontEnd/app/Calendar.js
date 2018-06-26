@@ -97,7 +97,13 @@ class CalendarPage extends Component {
     console.log(this.state)
     return (
       <div className='container calendar'>
-        <div className='month-year'>{this.months[this.state.month]} {this.state.year}</div>
+        <div className='month-year'>
+          <button className='fa fa-angle-double-left left-arrow-year' title='Previous Year'></button>
+          <button className='fa fa-angle-left left-arrow-month' title='Previous Month'></button>
+          {this.months[this.state.month]} {this.state.year}
+          <button className='fa fa-angle-right right-arrow-month' title='Next Month'></button>
+          <button className='fa fa-angle-double-right right-arrow-year' title='Next Year'></button>
+        </div>
         <table className='table'>
           <thead className='calendar-thead'>
             <tr>

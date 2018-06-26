@@ -7,6 +7,27 @@
   text-align: center;
   margin: 0;
   font-size: 2em;
+  position: relative
+}
+
+.left-arrow-year {
+  position: absolute;
+  left: 10px;
+}
+
+.left-arrow-month {
+  position: absolute;
+  left: 75px;
+}
+
+.right-arrow-year {
+  position: absolute;
+  right: 10px;
+}
+
+.right-arrow-month {
+  position: absolute;
+  right: 75px;
 }
 
 .table {
