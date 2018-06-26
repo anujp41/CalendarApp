@@ -17,6 +17,7 @@ class CalendarPage extends Component {
     this.renderTable = this.renderTable.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
     this.updateDateState = this.updateDateState.bind(this);
+    this.handlePrevNext = this.handlePrevNext.bind(this);
     this.days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     this.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     this.state = {
@@ -93,16 +94,37 @@ class CalendarPage extends Component {
     this.setState({ today, year, month, firstDayMonth, lastDateMonth });
   }
 
+  handlePrevNext(event) {
+    const { title } = event.target;
+    const { today } = this.state;
+    switch (title) {
+      case 'Previous Year':
+        this.updateDateState(moment(today).subtract(1, 'year'));
+        break;
+      case 'Previous Month':
+        this.updateDateState(moment(today).subtract(1, 'month'));
+        break;
+      case 'Next Year':
+        this.updateDateState(moment(today).add(1, 'year'));
+        break;
+      case 'Next Month':
+        this.updateDateState(moment(today).add(1, 'month'));
+        break;
+      default:
+        alert('Please click the button again!');
+    }
+  }
+
   render() {
-    console.log(this.state)
+    // console.log(this.state)
     return (
       <div className='container calendar'>
         <div className='month-year'>
-          <button className='fa fa-angle-double-left left-arrow-year' title='Previous Year'></button>
-          <button className='fa fa-angle-left left-arrow-month' title='Previous Month'></button>
+          <button className='fa fa-angle-double-left left-arrow-year' title='Previous Year' onClick={this.handlePrevNext}></button>
+          <button className='fa fa-angle-left left-arrow-month' title='Previous Month' onClick={this.handlePrevNext}></button>
           {this.months[this.state.month]} {this.state.year}
-          <button className='fa fa-angle-right right-arrow-month' title='Next Month'></button>
-          <button className='fa fa-angle-double-right right-arrow-year' title='Next Year'></button>
+          <button className='fa fa-angle-right right-arrow-month' title='Next Month' onClick={this.handlePrevNext}></button>
+          <button className='fa fa-angle-double-right right-arrow-year' title='Next Year' onClick={this.handlePrevNext}></button>
         </div>
         <table className='table'>
           <thead className='calendar-thead'>
