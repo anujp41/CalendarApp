@@ -7,6 +7,32 @@
   text-align: center;
   margin: 0;
   font-size: 2em;
+  position: relative
+}
+
+.fa {
+  width: 50px;
+  height: 30px;
+}
+
+.left-arrow-year {
+  position: absolute;
+  left: 10px;
+}
+
+.left-arrow-month {
+  position: absolute;
+  left: 75px;
+}
+
+.right-arrow-year {
+  position: absolute;
+  right: 10px;
+}
+
+.right-arrow-month {
+  position: absolute;
+  right: 75px;
 }
 
 .table {
@@ -25,9 +51,17 @@
   height: 50px;
 }
 
-.date:hover {
+.has-date {
+  background-color: #6ecad8
+}
+
+.has-date:hover {
   background-color: #8ddce8;
   cursor: pointer;
+}
+
+#borderless {
+  border: none;
 }
 
 .add-event {
