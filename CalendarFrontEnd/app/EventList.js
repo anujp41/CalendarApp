@@ -27,11 +27,14 @@ class EventList extends Component {
 
   render() {
     const {events} = this.props;
-    // console.log('events: ', events);
     const eventDate = Object.keys(events);
     const {event, idx} = this.state;
     if (eventDate.length === 0) {
-      return null;
+      return (
+        <div className='event-footer'>
+          <h1>Add events in the calendar to see them here!</h1>
+        </div>
+      )
     }
     return (
       <div className='event-footer'>

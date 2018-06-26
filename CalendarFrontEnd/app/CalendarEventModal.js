@@ -30,6 +30,9 @@ class CalendarEventModal extends Component {
       return;
     }
     this.setState({ [name] : value});
+    if (name === 'startTime' && this.state.endTime < value) {
+      this.setState({ endTime: value });
+    }
   }
 
   handleSubmit(event) {
