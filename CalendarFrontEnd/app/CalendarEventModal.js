@@ -13,14 +13,10 @@ class CalendarEventModal extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.state = {
-      // description: this.props.method === 'submit'? '' : this.props.event.description,
-      // eventDate: this.props.method === 'submit' ? null : this.props.event.eventDate,
-      // startTime: this.props.method === 'submit' ? 'Select:' : this.props.event.startTime,
-      // endTime: this.props.method === 'submit' ? 'Select:' : this.props.event.endTime
-      description: '',
-      eventDate: null,
-      startTime: 'Select:',
-      endTime: 'Select:'
+      description: this.props.method === 'submit'? '' : this.props.event.description,
+      eventDate: this.props.method === 'submit' ? null : this.props.event.eventDate,
+      startTime: this.props.method === 'submit' ? 'Select:' : this.props.event.startTime,
+      endTime: this.props.method === 'submit' ? 'Select:' : this.props.event.endTime
     }
   }
 
@@ -81,13 +77,6 @@ class CalendarEventModal extends Component {
 
   componentWillMount() {
     document.addEventListener('mousedown', this.handleClick, false);
-    this.props.method !== 'submit' &&
-    this.setState({
-      description: this.props.event.description,
-      eventDate: this.props.event.eventDate,
-      startTime: this.props.event.startTime,
-      endTime: this.props.event.endTime
-    })
   }
 
   componentWillUnmount() {
