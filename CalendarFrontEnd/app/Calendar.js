@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './Calendar.css';
 import CalendarEventModal from './CalendarEventModal';
 import EventListContainer from './EventList';
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 import { getEventsThunk } from '../store';
 
 class CalendarPage extends Component {
@@ -16,10 +16,13 @@ class CalendarPage extends Component {
     this.renderTable = this.renderTable.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
     this.days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    this.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     this.state = {
       showModal: false,
       date: null,
       events: {},
+      year: null,
+      month: null,
       firstDayMonth: null,
       lastDateMonth: null
     }
@@ -45,10 +48,11 @@ class CalendarPage extends Component {
   renderCell(cellNum) {
     const { firstDayMonth, lastDateMonth } = this.state;
     // return <td key={date} className='date' onClick={()=>this.toggleModal(date)}>{date}{this.checkEvents(date)}</td>;
-    if (firstDayMonth < cellNum && (cellNum-firstDayMonth) <= lastDateMonth) {
-      return <td key={cellNum} className='date' onClick={()=>this.toggleModal(cellNum)}>{cellNum-firstDayMonth}</td>;
+    if (firstDayMonth < cellNum && (cellNum-
+      firstDayMonth) <= lastDateMonth) {
+      return <td key={cellNum} className='date has-date' onClick={()=>this.toggleModal(cellNum-firstDayMonth)}>{cellNum-firstDayMonth}</td>;
     } else {
-      return <td key={cellNum} className='date' onClick={()=>this.toggleModal(cellNum)}>0</td>;
+      return <td key={cellNum} className='date'></td>;
     }
   }
 
@@ -77,16 +81,17 @@ class CalendarPage extends Component {
 
   componentWillMount() {
     const today = new Date();
-    const firstDayMonth = new Date(today.getFullYear(), today.getMonth(), 1).getDay();
-    const lastDateMonth = new Date(today.getFullYear(), today.getMonth()+1, 0).getDate();
-    console.log('firstDayMonth ', firstDayMonth, ' lastDateMonth ', lastDateMonth);
-    this.setState({ firstDayMonth, lastDateMonth });
+    const year = today.getFullYear();
+    const month = today.getMonth();
+    const firstDayMonth = new Date(year, month, 1).getDay();
+    const lastDateMonth = new Date(year, month+1, 0).getDate();
+    this.setState({ year, month, firstDayMonth, lastDateMonth });
   }
 
   render() {
     return (
       <div className='container calendar'>
-        <div className='month-year'>February 2015</div>
+        <div className='month-year'>{this.months[this.state.month]} {this.state.year}</div>
         <table className='table'>
           <thead className='calendar-thead'>
             <tr>

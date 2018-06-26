@@ -23,10 +23,13 @@
 
 .date {
   height: 50px;
-  border: 1px dotted black;
 }
 
-.date:hover {
+.has-date {
+  background-color: #6ecad8
+}
+
+.has-date:hover {
   background-color: #8ddce8;
   cursor: pointer;
 }
