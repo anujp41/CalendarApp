@@ -28,6 +28,14 @@ router.post('/', function (req, res, next) {
   .catch(next);
 });
 
+router.put('/:id', (req, res, next) => {
+  let id = req.params.id;
+  Events.findById(id)
+      .then(event => event.update(req.body))
+      .then(updatedEvent => res.json(updatedEvent))
+      .catch(next)
+})
+
 router.delete('/:id', function (req, res, next) {
   const {id} = req.params;
   Events.destroy({where: {id}})

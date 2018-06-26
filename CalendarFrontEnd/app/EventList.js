@@ -11,13 +11,14 @@ class EventList extends Component {
     this.toggleModal = this.toggleModal.bind(this);
     this.state = {
       updating: false,
-      event: null
+      event: null,
+      idx: null
     }
   }
 
-  toggleModal(event=null) {
+  toggleModal(event=null, idx=null) {
     const {updating} = this.state;
-    this.setState({ updating: !updating, event })
+    this.setState({ updating: !updating, event, idx })
   }
 
   handleRemove(date, idx, dbId) {
@@ -26,8 +27,9 @@ class EventList extends Component {
 
   render() {
     const {events} = this.props;
+    console.log('events: ', events);
     const eventDate = Object.keys(events);
-    const {event} = this.state;
+    const {event, idx} = this.state;
     if (eventDate.length === 0) {
       return null;
     }
@@ -47,7 +49,7 @@ class EventList extends Component {
             </thead>
             <tbody>
               {events[date].map((eventInfo, i) => (
-                <tr key={i} className='event-row' onClick={()=>this.toggleModal(eventInfo)}>
+                <tr key={i} className='event-row' onClick={()=>this.toggleModal(eventInfo, i)}>
                   <td className='update-cell'>{eventInfo.description}<span className='update-info'>Click to update!</span></td>
                   <td>{eventInfo.startTime}</td>
                   <td>{eventInfo.endTime}</td>
@@ -58,7 +60,7 @@ class EventList extends Component {
           </table>  
           </div>
         ))}
-        {this.state.updating && <CalendarEventModal method='update' showModal={this.state.updating} event={event} toggleModal={this.toggleModal}/>}
+        {this.state.updating && <CalendarEventModal method='update' showModal={this.state.updating} event={event} idx={idx} toggleModal={this.toggleModal}/>}
       </div>
     )
   }

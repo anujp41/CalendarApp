@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const CREATE_EVENT = 'CREATE_EVENT';
 const GET_EVENTS = 'GET_EVENTS';
+const UPDATE_EVENT = 'UPDATE_EVENT';
 const REMOVE_EVENT = 'REMOVE_EVENT';
 
 const initialState = {};
@@ -20,6 +21,7 @@ const mergeEventsToState = (priorState, newEvent) => {
 
 export const createEvent = event => ({ type: CREATE_EVENT, event });
 export const getEvents = events => ({ type: GET_EVENTS, events });
+export const updateEvent = (event, date, idx) => ({ type: UPDATE_EVENT, event, date, idx });
 export const removeEvent = (date, idx) => ({ type: REMOVE_EVENT, date, idx });
 
 export const createEventThunk = event => dispatch => 
@@ -30,6 +32,11 @@ export const createEventThunk = event => dispatch =>
 export const getEventsThunk = () => dispatch =>
   axios.get('http://localhost:3000/api/events')
   .then(events => dispatch(getEvents(events.data)))
+  .catch(err => console.log(err));
+
+export const updateEventThunk = (event, date, idx) => dispatch =>
+  axios.put(`http://localhost:3000/api/events/${event.id}`, event)
+  .then(event => dispatch(updateEvent(event.data, date, idx)))
   .catch(err => console.log(err));
 
 export const removeEventThunk = (idx, date, dbId) => dispatch =>
@@ -46,6 +53,18 @@ export default function (state = initialState, action) {
       return state.hasOwnProperty(date) ? mergeEventsToState(state, action.event) : {...state, ...action.event};
     case GET_EVENTS:
       return action.events;
+    case UPDATE_EVENT:
+      const initialDate = action.date;
+      const currEventDate = action.event.eventDate;
+      if (initialDate === currEventDate) {
+        state[initialDate].splice(action.idx,1,action.event);
+        return Object.assign({}, state);
+      } else {
+        state[initialDate].splice(action.idx,1);
+        if (state[initialDate].length === 0) delete state[initialDate];  
+        console.log('here ', state.hasOwnProperty(currEventDate) ? mergeEventsToState(state, action.event) : {...state, [currEventDate]: [action.event]})
+        return state.hasOwnProperty(currEventDate) ? mergeEventsToState(state, action.event) : {...state, ...action.event};
+      }
     case REMOVE_EVENT:
       state[action.date].splice(action.idx,1);
       if (state[action.date].length === 0) delete state[action.date];

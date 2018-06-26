@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './CalendarEventModal.css';
 import { connect } from "react-redux";
-import { createEventThunk } from '../store';
+import { createEventThunk, updateEventThunk } from '../store';
 
 class CalendarEventModal extends Component {
 
@@ -13,6 +13,7 @@ class CalendarEventModal extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.state = {
+      id: this.props.method === 'submit' ? null : this.props.event.id,
       description: this.props.method === 'submit'? '' : this.props.event.description,
       eventDate: this.props.method === 'submit' ? null : this.props.event.eventDate,
       startTime: this.props.method === 'submit' ? 'Select:' : this.props.event.startTime,
@@ -35,10 +36,11 @@ class CalendarEventModal extends Component {
     event.preventDefault();
     const state = this.state;
     if (this.props.method==='submit') {
+      const {id, ...state} = this.state;
       state.eventDate = this.props.date;
       this.props.submit(state);
     } else {
-      this.props.update(state);
+      this.props.update(state, this.props.event.eventDate, this.props.idx);
     }
     this.props.toggleModal();
   }
@@ -91,7 +93,6 @@ class CalendarEventModal extends Component {
   }
 
   render() {
-    console.log('event updating is ', this.state.eventDate);
     if(!this.props.showModal) {
       return null;
     }
@@ -151,8 +152,8 @@ const mapDispatch = dispatch => {
     submit(event) {
       dispatch(createEventThunk(event));
     },
-    update(event) {
-      console.log('i will update ', event);
+    update(event, initialDate, idx) {
+      dispatch(updateEventThunk(event, initialDate, idx));
     }
   }
 }
