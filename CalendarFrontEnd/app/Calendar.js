@@ -11,15 +11,17 @@ class CalendarPage extends Component {
     super();
     // this.checkEvents = this.checkEvents.bind(this);
     this.renderDaysHeader = this.renderDaysHeader.bind(this);
-    this.renderDate = this.renderDate.bind(this);
-    this.renderDateRow = this.renderDateRow.bind(this);
-    this.renderDateTable = this.renderDateTable.bind(this);
+    this.renderCell = this.renderCell.bind(this);
+    this.renderRow = this.renderRow.bind(this);
+    this.renderTable = this.renderTable.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
     this.days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     this.state = {
       showModal: false,
       date: null,
-      events: {}
+      events: {},
+      firstDayMonth: null,
+      lastDateMonth: null
     }
   }
 
@@ -39,26 +41,32 @@ class CalendarPage extends Component {
   //   }
   // }
 
-  renderDate(date) {
+
+  renderCell(cellNum) {
+    const { firstDayMonth, lastDateMonth } = this.state;
     // return <td key={date} className='date' onClick={()=>this.toggleModal(date)}>{date}{this.checkEvents(date)}</td>;
-    return <td key={date} className='date' onClick={()=>this.toggleModal(date)}>{date}</td>;
+    if (firstDayMonth < cellNum && (cellNum-firstDayMonth) <= lastDateMonth) {
+      return <td key={cellNum} className='date' onClick={()=>this.toggleModal(cellNum)}>{cellNum-firstDayMonth}</td>;
+    } else {
+      return <td key={cellNum} className='date' onClick={()=>this.toggleModal(cellNum)}>0</td>;
+    }
   }
 
-  renderDateRow(num) {
+  renderRow(num) {
     let dateArray = new Array(7);
     const maxLength = dateArray.length;
     for (let i = 0; i < maxLength; i++) {
       const date = (num*7) + i + 1;
-      dateArray[i] = this.renderDate(date);
+      dateArray[i] = this.renderCell(date);
     }
     return dateArray;
   }
 
-  renderDateTable() {
-    let dateTable = new Array(4);
+  renderTable() {
+    let dateTable = new Array(6);
     const maxLength = dateTable.length;
     for (let i = 0; i < maxLength; i++) {
-      dateTable[i] = this.renderDateRow(i);
+      dateTable[i] = this.renderRow(i);
     }
     return dateTable;
   }
@@ -66,6 +74,14 @@ class CalendarPage extends Component {
   // componentDidMount() {
   //   this.props.getData();
   // }
+
+  componentWillMount() {
+    const today = new Date();
+    const firstDayMonth = new Date(today.getFullYear(), today.getMonth(), 1).getDay();
+    const lastDateMonth = new Date(today.getFullYear(), today.getMonth()+1, 0).getDate();
+    console.log('firstDayMonth ', firstDayMonth, ' lastDateMonth ', lastDateMonth);
+    this.setState({ firstDayMonth, lastDateMonth });
+  }
 
   render() {
     return (
@@ -77,8 +93,9 @@ class CalendarPage extends Component {
               {this.days.map(this.renderDaysHeader)}
             </tr>
           </thead>
-          <tbody className='calendar-row'>
-            {this.renderDateTable().map((dateRow, idx)=><tr key={idx}>{dateRow}</tr>)}
+          {/* <tbody className='calendar-row'> */}
+          <tbody>
+            {this.renderTable().map((dateRow, idx)=><tr key={idx}>{dateRow}</tr>)}
           </tbody>
         </table>
         {this.state.showModal && <CalendarEventModal method='submit' showModal={this.state.showModal} toggleModal={this.toggleModal} date={this.state.date}/>}
