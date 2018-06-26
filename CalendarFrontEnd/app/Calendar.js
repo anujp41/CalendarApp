@@ -10,7 +10,7 @@ class CalendarPage extends Component {
 
   constructor() {
     super();
-    // this.checkEvents = this.checkEvents.bind(this);
+    this.checkEvents = this.checkEvents.bind(this);
     this.renderDaysHeader = this.renderDaysHeader.bind(this);
     this.renderCell = this.renderCell.bind(this);
     this.renderRow = this.renderRow.bind(this);
@@ -41,18 +41,17 @@ class CalendarPage extends Component {
     return <th key={day} scope='col' className='col-sm-1 days'>{day}</th>;
   }
 
-  // checkEvents(date) {
-  //   const { events } = this.props;
-  //   if (date in events) {
-  //     return <div className='event-num'>{events[date].length} events(s) today!</div>;
-  //   }
-  // }
+  checkEvents(date) {
+    const { events } = this.props;
+    if (date in events) {
+      return <div className='event-num'>{events[date].length} events(s) today!</div>;
+    }
+  }
 
   renderCell(cellNum) {
     const { firstDayMonth, lastDateMonth } = this.state;
-    // return <td key={date} className='date' onClick={()=>this.toggleModal(date)}>{date}{this.checkEvents(date)}</td>;
     if (firstDayMonth < cellNum && (cellNum-firstDayMonth) <= lastDateMonth) {
-      return <td key={cellNum} className='date has-date' id='borderless' onClick={()=>this.toggleModal(cellNum-firstDayMonth)}>{cellNum-firstDayMonth}</td>;
+      return <td key={cellNum} className='date has-date' id='borderless' onClick={()=>this.toggleModal(cellNum-firstDayMonth)}>{cellNum-firstDayMonth}{this.checkEvents(cellNum-firstDayMonth)}</td>;
     } else {
       return <td key={cellNum} className='date'></td>;
     }
@@ -77,9 +76,9 @@ class CalendarPage extends Component {
     return dateTable;
   }
 
-  // componentDidMount() {
-  //   this.props.getData();
-  // }
+  componentDidMount() {
+    this.props.getData();
+  }
 
   componentWillMount() {
     const today = new Date();
@@ -116,7 +115,6 @@ class CalendarPage extends Component {
   }
 
   render() {
-    // console.log(this.state)
     return (
       <div className='container calendar'>
         <div className='month-year'>
@@ -139,28 +137,28 @@ class CalendarPage extends Component {
         </table>
         {this.state.showModal && <CalendarEventModal method='submit' showModal={this.state.showModal} toggleModal={this.toggleModal} date={this.state.date}/>}
 
-        {/* <EventListContainer /> */}
+        <EventListContainer />
 
       </div>
     )
   }
 }
 
-export default CalendarPage;
+// export default CalendarPage;
 
-// const mapState = state => {
-//   return {
-//     events: state.events
-//   }
-// }
+const mapState = state => {
+  return {
+    events: state.events
+  }
+}
 
-// const mapDispatch = dispatch => {
-//   return {
-//     getData() {
-//       dispatch(getEventsThunk());
-//     }
-//   }
-// }
+const mapDispatch = dispatch => {
+  return {
+    getData() {
+      dispatch(getEventsThunk());
+    }
+  }
+}
 
-// const CalendarPageContainer = connect(mapState, mapDispatch)(CalendarPage);
-// export default CalendarPageContainer;
+const CalendarPageContainer = connect(mapState, mapDispatch)(CalendarPage);
+export default CalendarPageContainer;
