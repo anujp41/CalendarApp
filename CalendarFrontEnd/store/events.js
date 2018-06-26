@@ -62,8 +62,7 @@ export default function (state = initialState, action) {
       } else {
         state[initialDate].splice(action.idx,1);
         if (state[initialDate].length === 0) delete state[initialDate];  
-        console.log('here ', state.hasOwnProperty(currEventDate) ? mergeEventsToState(state, action.event) : {...state, [currEventDate]: [action.event]})
-        return state.hasOwnProperty(currEventDate) ? mergeEventsToState(state, action.event) : {...state, ...action.event};
+        return state.hasOwnProperty(currEventDate) ? mergeEventsToState(state, {[currEventDate]: [action.event]}) : {...state, [currEventDate]: [action.event]};
       }
     case REMOVE_EVENT:
       state[action.date].splice(action.idx,1);

@@ -27,7 +27,7 @@ class EventList extends Component {
 
   render() {
     const {events} = this.props;
-    console.log('events: ', events);
+    // console.log('events: ', events);
     const eventDate = Object.keys(events);
     const {event, idx} = this.state;
     if (eventDate.length === 0) {
