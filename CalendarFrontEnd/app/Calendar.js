@@ -17,7 +17,7 @@ class CalendarPage extends Component {
     this.toggleModal = this.toggleModal.bind(this);
     this.days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     this.state = {
-      showModal: true,
+      showModal: false,
       date: null,
       events: {}
     }
