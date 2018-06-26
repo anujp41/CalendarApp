@@ -1,12 +1,7 @@
 import axios from 'axios';
 
-const CREATE_EVENT = 'CREATE_EVENT';
-const GET_EVENTS = 'GET_EVENTS';
-const UPDATE_EVENT = 'UPDATE_EVENT';
-const REMOVE_EVENT = 'REMOVE_EVENT';
-
-const initialState = {};
-
+/* this function allows to add a new event object to state 
+    whether or not state has a particular date as key */
 const mergeEventsToState = (priorState, newEvent) => {
   const resultObj = {};
   for (let key in priorState) {
@@ -18,7 +13,9 @@ const mergeEventsToState = (priorState, newEvent) => {
   }
   return resultObj;
 }
-
+    
+/* this function updates state; is called for both PUT and DELETE request
+  for PUT, this would replace an event; for DELETE, would remove an event */
 const updateState = (state, date, index, event=null, newDate=null) => {
   if (event===null) {
     state[date].splice(index,1);
@@ -29,11 +26,24 @@ const updateState = (state, date, index, event=null, newDate=null) => {
   return Object.assign({}, state);
 }
 
+// ACTION TYPES
+const CREATE_EVENT = 'CREATE_EVENT';
+const GET_EVENTS = 'GET_EVENTS';
+const UPDATE_EVENT = 'UPDATE_EVENT';
+const REMOVE_EVENT = 'REMOVE_EVENT';
+
+
+// Initializing the state
+const initialState = {};
+
+// ACTION CREATORS
 export const createEvent = event => ({ type: CREATE_EVENT, event });
 export const getEvents = events => ({ type: GET_EVENTS, events });
 export const updateEvent = (event, date, idx) => ({ type: UPDATE_EVENT, event, date, idx });
 export const removeEvent = (date, idx) => ({ type: REMOVE_EVENT, date, idx });
 
+
+// Thunks to handle async requests
 export const createEventThunk = event => dispatch => 
   axios.post('http://localhost:3000/api/events', event)
   .then(event => dispatch(createEvent(event.data)))
@@ -56,6 +66,8 @@ export const removeEventThunk = (idx, date, dbId) => dispatch =>
   })
   .catch(err => console.log(err));
 
+
+// REDUCER where each of the RESTful method has a case
 export default function (state = initialState, action) {
   switch (action.type) {
     case CREATE_EVENT:
