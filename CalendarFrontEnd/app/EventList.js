@@ -26,7 +26,7 @@ class EventList extends Component {
   }
 
   render() {
-    const {events} = this.props;
+    const {events, month} = this.props;
     const eventDate = Object.keys(events);
     const {event, idx} = this.state;
     if (eventDate.length === 0) {
@@ -40,7 +40,7 @@ class EventList extends Component {
       <div className='event-footer'>
         {eventDate.map((date, idx) => (
           <div key={idx}>
-          <div className='event-date'>February {date}</div>
+          <div className='event-date'>{month} {date}</div>
           <table className='table table-hover'>
             <thead className='thead-light'>
               <tr>

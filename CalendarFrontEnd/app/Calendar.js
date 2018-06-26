@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import './Calendar.css';
 import CalendarEventModal from './CalendarEventModal';
-import EventListContainer from './EventList';
+import EventList from './EventList';
 import { connect } from 'react-redux';
 import { getEventsThunk } from '../store';
 
@@ -130,21 +130,18 @@ class CalendarPage extends Component {
               {this.days.map(this.renderDaysHeader)}
             </tr>
           </thead>
-          {/* <tbody className='calendar-row'> */}
           <tbody>
             {this.renderTable().map((dateRow, idx)=><tr key={idx}>{dateRow}</tr>)}
           </tbody>
         </table>
         {this.state.showModal && <CalendarEventModal method='submit' showModal={this.state.showModal} toggleModal={this.toggleModal} date={this.state.date}/>}
 
-        <EventListContainer />
+        <EventList month={this.months[this.state.month]}/>
 
       </div>
     )
   }
 }
-
-// export default CalendarPage;
 
 const mapState = state => {
   return {
