@@ -9,7 +9,7 @@ class CalendarPage extends Component {
 
   constructor() {
     super();
-    this.checkEvents = this.checkEvents.bind(this);
+    // this.checkEvents = this.checkEvents.bind(this);
     this.renderDaysHeader = this.renderDaysHeader.bind(this);
     this.renderDate = this.renderDate.bind(this);
     this.renderDateRow = this.renderDateRow.bind(this);
@@ -32,15 +32,16 @@ class CalendarPage extends Component {
     return <th key={day} scope='col' className='col-sm-1 days'>{day}</th>;
   }
 
-  checkEvents(date) {
-    const { events } = this.props;
-    if (date in events) {
-      return <div className='event-num'>{events[date].length} events(s) today!</div>;
-    }
-  }
+  // checkEvents(date) {
+  //   const { events } = this.props;
+  //   if (date in events) {
+  //     return <div className='event-num'>{events[date].length} events(s) today!</div>;
+  //   }
+  // }
 
   renderDate(date) {
-    return <td key={date} className='date' onClick={()=>this.toggleModal(date)}>{date}{this.checkEvents(date)}</td>;
+    // return <td key={date} className='date' onClick={()=>this.toggleModal(date)}>{date}{this.checkEvents(date)}</td>;
+    return <td key={date} className='date' onClick={()=>this.toggleModal(date)}>{date}</td>;
   }
 
   renderDateRow(num) {
@@ -62,12 +63,11 @@ class CalendarPage extends Component {
     return dateTable;
   }
 
-  componentDidMount() {
-    this.props.getData();
-  }
+  // componentDidMount() {
+  //   this.props.getData();
+  // }
 
   render() {
-    // console.log('events ', this.props.events);
     return (
       <div className='container calendar'>
         <div className='month-year'>February 2015</div>
@@ -83,7 +83,7 @@ class CalendarPage extends Component {
         </table>
         {this.state.showModal && <CalendarEventModal method='submit' showModal={this.state.showModal} toggleModal={this.toggleModal} date={this.state.date}/>}
 
-        <EventListContainer />
+        {/* <EventListContainer /> */}
 
       </div>
     )
