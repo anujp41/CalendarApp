@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import './Calendar.css';
 import CalendarEventModal from './CalendarEventModal';
-import EventList from './EventList';
 import { connect } from 'react-redux';
 import { getEventsThunk } from '../store';
 
@@ -10,48 +9,71 @@ class CalendarPage extends Component {
 
   constructor() {
     super();
+    this.renderEvents = this.renderEvents.bind(this);
     this.checkEvents = this.checkEvents.bind(this);
     this.renderDaysHeader = this.renderDaysHeader.bind(this);
     this.renderCell = this.renderCell.bind(this);
     this.renderRow = this.renderRow.bind(this);
     this.renderTable = this.renderTable.bind(this);
-    this.toggleModal = this.toggleModal.bind(this);
+    this.toggleSubmitModal = this.toggleSubmitModal.bind(this);
+    this.toggleUpdateModal = this.toggleUpdateModal.bind(this);
     this.updateDateState = this.updateDateState.bind(this);
     this.handlePrevNext = this.handlePrevNext.bind(this);
     this.days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     this.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     this.state = {
-      showModal: false,
+      showSubmitModal: false,
+      showUpdateModal: false,
       date: null,
       events: {},
       today: null,
       year: null,
       month: null,
       firstDayMonth: null,
-      lastDateMonth: null
+      lastDateMonth: null,
+      event: null,
+      idx: null
     }
   }
 
-  toggleModal(date=null) {
-    const {showModal} = this.state;
-    this.setState({ showModal: !showModal, date })
+  toggleSubmitModal(date=null) {
+    const {showSubmitModal} = this.state;
+    this.setState({ showSubmitModal: !showSubmitModal, date })
+  }
+
+  toggleUpdateModal(event=null, idx=null) {
+    const {showUpdateModal} = this.state;
+    this.setState({ showUpdateModal: !showUpdateModal, event, idx })
   }
 
   renderDaysHeader(day) {
     return <th key={day} scope='col' className='col-sm-1 days'>{day}</th>;
   }
 
+  renderEvents(events) {
+    return (
+      events.map((event, i) => 
+        <div key={i} className='event-desc' onClick={()=>this.toggleUpdateModal(event, i)}>
+          <div><b>{event.startTime}-{event.endTime}</b></div> <div><i>{event.description}</i></div>
+        </div>
+      )
+    )
+  }
+
   checkEvents(date) {
     const { events } = this.props;
-    if (date in events) {
-      return <div className='event-num'>{events[date].length} events(s) today!</div>;
-    }
+    return (
+      <div className='date-detail'>
+        <div className='event-entry' onClick={()=>this.toggleSubmitModal(date)}>{date}</div>
+        {(date in events) && <div className='event-num'>{this.renderEvents(events[date])}</div>}
+      </div>
+    )
   }
 
   renderCell(cellNum) {
     const { firstDayMonth, lastDateMonth } = this.state;
     if (firstDayMonth < cellNum && (cellNum-firstDayMonth) <= lastDateMonth) {
-      return <td key={cellNum} className='date has-date' id='borderless' onClick={()=>this.toggleModal(cellNum-firstDayMonth)}>{cellNum-firstDayMonth}{this.checkEvents(cellNum-firstDayMonth)}</td>;
+      return <td key={cellNum} className='date has-date'>{this.checkEvents(cellNum-firstDayMonth)}</td>;
     } else {
       return <td key={cellNum} className='date'></td>;
     }
@@ -75,10 +97,6 @@ class CalendarPage extends Component {
     }
     return dateTable;
   }
-
-  // componentDidMount() {
-  //   this.props.getData();
-  // }
 
   componentWillMount() {
     const today = new Date();
@@ -116,6 +134,7 @@ class CalendarPage extends Component {
   }
 
   render() {
+    const {event, idx} = this.state;
     return (
       <div className='container calendar'>
         <div className='month-year'>
@@ -132,12 +151,11 @@ class CalendarPage extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.renderTable().map((dateRow, idx)=><tr key={idx}>{dateRow}</tr>)}
+            {this.renderTable().map((dateRow, idx)=><tr key={idx} className='calendar-row'>{dateRow}</tr>)}
           </tbody>
         </table>
-        {this.state.showModal && <CalendarEventModal method='submit' showModal={this.state.showModal} toggleModal={this.toggleModal} fullDate={{year: this.state.year, month: this.state.month+1, date: this.state.date}}/>}
-
-        <EventList month={this.months[this.state.month]} maxDate={this.state.lastDateMonth}/>
+        {this.state.showSubmitModal && <CalendarEventModal method='submit' showModal={this.state.showSubmitModal} toggleModal={this.toggleSubmitModal} fullDate={{year: this.state.year, month: this.state.month+1, date: this.state.date}}/>}
+        {this.state.showUpdateModal && <CalendarEventModal method='update' showModal={this.state.showUpdateModal} toggleModal={this.toggleUpdateModal} event={event} idx={idx} maxDate={this.state.lastDateMonth}/>}
 
       </div>
     )

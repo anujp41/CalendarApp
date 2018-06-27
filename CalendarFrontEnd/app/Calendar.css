@@ -1,5 +1,18 @@
+.container {
+  margin: 0;
+  width: 100%;
+}
+
+.calendar {
+  height: 75vh;
+}
+
 .calendar-thead {
   background-color: hsl(79, 76%, 60%);
+}
+
+.calendar-row {
+  max-height: 150px;
 }
 
 .month-year {
@@ -39,29 +52,17 @@
   margin-bottom: 0;
 }
 
-.calendar-row {
-  background-color: #6ecad8;
-}
-
 .days {
   text-align: center;
 }
 
 .date {
-  height: 50px;
+  height: 90px;
 }
 
 .has-date {
-  background-color: #6ecad8
-}
-
-.has-date:hover {
-  background-color: #8ddce8;
-  cursor: pointer;
-}
-
-#borderless {
-  border: none;
+  background-color: #6ecad8;
+  border: 2px dotted grey;
 }
 
 .add-event {
@@ -92,9 +93,33 @@
   transform: rotate(90deg) translateX(5px);
 }
 
+.date-detail {
+  width: 100%;
+  height: 100%;
+}
+
+.event-entry {
+  height: 30%;
+}
+
+.event-entry:hover {
+  background-color: #ade4ed;
+  cursor: pointer;
+}
+
 .event-num {
-  text-align: center;
+  width: 100%;
+  height: 70%;
   font-size: 8px;
-  margin: 5px 20% 0 20%;
-  border-bottom: 1px dotted white;
+  overflow: auto;
+}
+
+.event-desc {
+  font-size: 11px;
+  cursor: pointer;
+  border-bottom: 0.5px dashed white;
+}
+
+.event-desc:hover {
+  background-color: thistle
 }
