@@ -13,6 +13,9 @@ class CalendarEventModal extends Component {
     this.convertDateObj = this.convertDateObj.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSave = this.handleSave.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.state = {
       id: this.props.method === 'submit' ? null : this.props.event.id,
@@ -49,18 +52,28 @@ class CalendarEventModal extends Component {
   }
 
   handleSubmit(event) {
-    const state = this.state;
-    if (event==='submit') {
-      const { year, month, date} = this.props.fullDate;
-      const dateOfEvent = month+'/'+date+'/'+year;
-      const {id, ...state} = this.state;
-      state.eventDate = dateOfEvent;
-      this.props.submit(state);
-    } else if (event==='update') {
-      this.props.update(state, new Date(this.props.event.eventDate).getDate(), this.props.idx);
-    } else {
-      this.props.delete(this.props.idx, new Date(this.props.event.eventDate).getDate(), this.state.id);
-    }
+    event.preventDefault();
+  }
+
+  handleSave(event) {
+    event.preventDefault();
+    const { year, month, date} = this.props.fullDate;
+    const dateOfEvent = month+'/'+date+'/'+year;
+    const {id, ...state} = this.state;
+    state.eventDate = dateOfEvent;
+    this.props.submit(state);
+    this.props.toggleModal();
+  }
+
+  handleUpdate(event) {
+    event.preventDefault();
+    this.props.update(this.state, new Date(this.props.event.eventDate).getDate(), this.props.idx);
+    this.props.toggleModal();
+  }
+
+  handleDelete(event) {
+    event.preventDefault();
+    this.props.delete(this.props.idx, new Date(this.props.event.eventDate).getDate(), this.state.id);
     this.props.toggleModal();
   }
 
@@ -127,7 +140,7 @@ class CalendarEventModal extends Component {
           ? <h5 className='modal-title'>Enter event details below for {this.months[fullDate.month-1]} {fullDate.date}:</h5>
           : <h5 className='modal-title'>Update your event below:</h5>}
 
-          <form className='formBody' autoComplete="off">
+          <form className='formBody' autoComplete="off" onSubmit={this.handleSubmit.bind(this)}>
 
             <div className='formfield'>
               <input required className="input" type="text" name="description" maxLength='50' value={description} onChange={this.handleChange}/>
@@ -158,12 +171,12 @@ class CalendarEventModal extends Component {
                 </select>
             </div>}
 
-            {endTime !== 'Select:' && method==='submit' && <button className='button' onClick={()=>this.handleSubmit('submit')}>{method}</button>}
+            {endTime !== 'Select:' && method==='submit' && <button className='button' type='submit' value='submit' onClick={this.handleSave.bind(this)}>{method}</button>}
 
             {endTime !== 'Select:' && method!=='submit' && 
             <div className='button-group'>
-              <button className='button button-warning' onClick={()=>this.handleSubmit('update')}>Update</button>
-              <button className='button button-danger' onClick={()=>this.handleSubmit('delete')}>Delete</button>
+              <button className='button button-warning' type='submit' value='submit' onClick={this.handleUpdate.bind(this)}>Update</button>
+              <button className='button button-danger' type='submit' value='submit'  onClick={this.handleDelete.bind(this)}>Delete</button>
             </div>}
 
           </form>
