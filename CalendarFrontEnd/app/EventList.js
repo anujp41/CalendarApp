@@ -44,10 +44,10 @@ class EventList extends Component {
           <table className='table table-hover'>
             <thead className='thead-light'>
               <tr>
-                <th scope='col'>Event Description</th>
-                <th scope='col'>Start Time</th>
-                <th scope='col'>End Time</th>
-                <th scope='col'>Remove?</th>
+                <th scope='col' className='col-md-7'>Event Description</th>
+                <th scope='col' className='col-md-2'>Start Time</th>
+                <th scope='col' className='col-md-2'>End Time</th>
+                <th scope='col' className='col-md-1'>Remove?</th>
               </tr>
             </thead>
             <tbody>

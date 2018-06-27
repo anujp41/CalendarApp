@@ -5,18 +5,17 @@ const { Events } = require('../models');
 //function changes database results from simple JSON to complicated that can be used by front-end
 const updateJSONObject = events => {
   let eventArr = [];
-  console.log('events is ', events)
   if (Array.isArray(events)) {
     eventArr = events.map(event => event.dataValues);
   } else {
     eventArr = [events.dataValues];
   }
-  return eventArr;
-  // const eventObj = {};
-  // for (let event of eventArr) {
-  //   eventObj[event.eventDate] ? eventObj[event.eventDate].push(event) : eventObj[event.eventDate] = [event];
-  // }
-  // return eventObj;
+  const eventObj = {};
+  for (let event of eventArr) {
+    const date = event.eventDate.getDate();
+    eventObj[date] ? eventObj[date].push(event) : eventObj[date] = [event];
+  }
+  return eventObj;
 }
 
 /* Each of the handlers (except DELETE) call the updateJSONObject function above
@@ -26,8 +25,8 @@ router.get('/', function (req, res, next) {
   Events.findAll({
     where: {
       eventDate: {
-        [Op.gte]: new Date('2018-06-04'),
-        [Op.lte]: new Date('2018-06-05')
+        [Op.gte]: new Date('2018-06-01'),
+        [Op.lte]: new Date('2018-06-31')
       }
     }
   })
