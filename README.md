@@ -15,11 +15,10 @@ You can see the webapge at `http://localhost:3000/`
 
 ## Front-End
 
-Calendar component shows the calendar on the front-screen; user can interact with this component to add events to a give date and on adding an event, Calendar component shows the number of events in a given date;
+Calendar component shows the calendar on the front-screen; user can interact with this component to add events to a give date and on adding an event. Calendar also lists the events within each date; on clicking listed events on a given date, user can update or delete events.
 
 CalendarEventModal is the modal opened when the user wants to add an event or edit an event; I am re-using the same modal in both cases using ternary operator to generate different headers, additional drowpdowns, and different button depending on the user;
 
-EventList is the footer that can be seen in the Calendar component; this component shows the list of all events in a given month and allows user to edit or remove particular events.
 
 ### Redux store
 

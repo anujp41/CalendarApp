@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import moment from 'moment';
 import './Calendar.css';
 import CalendarEventModal from './CalendarEventModal';
-import EventList from './EventList';
 import { connect } from 'react-redux';
 import { getEventsThunk } from '../store';
 
