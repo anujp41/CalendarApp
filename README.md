@@ -2,8 +2,12 @@
 
 # Instructions for running the webapp
 
-The following instructions assume that your machine has PostgreSQL installed and running on port:5432
+The following instructions assume that your machine has PostgreSQL installed and running on port:5432.
 
+After you clone the repo and navigate to the folder that contains the repo:
+
+    cd CalendarApp
+    npm install
     createdb spotify-calendar-app
     npm run seed
     npm start
