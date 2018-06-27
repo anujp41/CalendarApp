@@ -57,6 +57,10 @@ class CalendarEventModal extends Component {
 
   handleSave(event) {
     event.preventDefault();
+    if (this.state.description.length===0) {
+      alert('Please add a description for your event!');
+      return;
+    };
     const { year, month, date} = this.props.fullDate;
     const dateOfEvent = month+'/'+date+'/'+year;
     const {id, ...state} = this.state;
@@ -67,6 +71,10 @@ class CalendarEventModal extends Component {
 
   handleUpdate(event) {
     event.preventDefault();
+    if (this.state.description.length===0) {
+      alert('Please add a description for your event!');
+      return;
+    };
     this.props.update(this.state, new Date(this.props.event.eventDate).getDate(), this.props.idx);
     this.props.toggleModal();
   }
@@ -102,7 +110,7 @@ class CalendarEventModal extends Component {
     } else {
       initialDate = new Date(2018, 5, 27, 0, 0, 0, 0);
     }
-    const timeArr = [];
+    const timeArr = ['Select:'];
     while (initialDate.getDate()<28) {
       timeArr.push(initialDate.toLocaleTimeString('en-US', {hour: '2-digit', minute:'2-digit'}));
       initialDate.setMinutes(initialDate.getMinutes()+30);
