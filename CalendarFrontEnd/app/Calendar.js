@@ -137,7 +137,7 @@ class CalendarPage extends Component {
         </table>
         {this.state.showModal && <CalendarEventModal method='submit' showModal={this.state.showModal} toggleModal={this.toggleModal} fullDate={{year: this.state.year, month: this.state.month+1, date: this.state.date}}/>}
 
-        <EventList month={this.months[this.state.month]}/>
+        <EventList month={this.months[this.state.month]} maxDate={this.state.lastDateMonth}/>
 
       </div>
     )

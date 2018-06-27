@@ -63,7 +63,7 @@ class EventList extends Component {
           </table>  
           </div>
         ))}
-        {this.state.updating && <CalendarEventModal method='update' showModal={this.state.updating} event={event} idx={idx} toggleModal={this.toggleModal}/>}
+        {this.state.updating && <CalendarEventModal method='update' showModal={this.state.updating} event={event} idx={idx} toggleModal={this.toggleModal} maxDate={this.props.maxDate}/>}
       </div>
     )
   }

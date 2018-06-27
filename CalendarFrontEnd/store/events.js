@@ -77,7 +77,7 @@ export default function (state = initialState, action) {
       return action.events;
     case UPDATE_EVENT:
       const initialDate = action.date;
-      const currEventDate = Object.keys(action.event)[0];
+      const currEventDate = parseInt(Object.keys(action.event)[0]);
       if (initialDate === currEventDate) {
         return updateState(state, initialDate, action.idx, action.event, currEventDate);
       } else {

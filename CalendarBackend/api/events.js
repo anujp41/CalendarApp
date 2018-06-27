@@ -45,11 +45,11 @@ router.post('/', function (req, res, next) {
 
 // PUT request handler
 router.put('/:id', (req, res, next) => {
-  let id = req.params.id;
+  let {id} = req.params;
   Events.findById(id)
-      .then(event => event.update(req.body))
-      .then(updatedEvent => res.json(updateJSONObject(updatedEvent)))
-      .catch(next)
+  .then(event => event.update(req.body))
+  .then(updatedEvent => res.json(updateJSONObject(updatedEvent)))
+  .catch(next)
 })
 
 // DELETE request handler
