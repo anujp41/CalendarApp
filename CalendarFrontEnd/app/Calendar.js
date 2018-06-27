@@ -43,15 +43,18 @@ class CalendarPage extends Component {
 
   checkEvents(date) {
     const { events } = this.props;
-    if (date in events) {
-      return <div className='event-num'>{events[date].length} events(s) today!</div>;
-    }
+    return (
+      <div className='date-detail'>
+        <div className='event-entry' onClick={()=>this.toggleModal(date)}>{date}</div>
+        {(date in events) && <div className='event-num'>{events[date].length} events(s) today!</div>}
+      </div>
+    )
   }
 
   renderCell(cellNum) {
     const { firstDayMonth, lastDateMonth } = this.state;
     if (firstDayMonth < cellNum && (cellNum-firstDayMonth) <= lastDateMonth) {
-      return <td key={cellNum} className='date has-date' onClick={()=>this.toggleModal(cellNum-firstDayMonth)}>{cellNum-firstDayMonth}{this.checkEvents(cellNum-firstDayMonth)}</td>;
+      return <td key={cellNum} className='date has-date'>{this.checkEvents(cellNum-firstDayMonth)}</td>;
     } else {
       return <td key={cellNum} className='date'></td>;
     }
@@ -128,7 +131,7 @@ class CalendarPage extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.renderTable().map((dateRow, idx)=><tr key={idx}>{dateRow}</tr>)}
+            {this.renderTable().map((dateRow, idx)=><tr key={idx} className='calendar-row'>{dateRow}</tr>)}
           </tbody>
         </table>
         {this.state.showModal && <CalendarEventModal method='submit' showModal={this.state.showModal} toggleModal={this.toggleModal} fullDate={{year: this.state.year, month: this.state.month+1, date: this.state.date}}/>}
