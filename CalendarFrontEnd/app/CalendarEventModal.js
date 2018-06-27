@@ -91,7 +91,7 @@ class CalendarEventModal extends Component {
     let hour = parseInt(timeHHMM[0]);
     let min = parseInt(timeHHMM[1].slice(0,2));
     let ampm = timeHHMM[1].slice(-2);
-    if (ampm === 'PM') hour += 12;
+    if (ampm === 'PM' && hour < 12) hour += 12;
     return new Date(2018, 5, 27, hour, min, 0, 0);
   }
 
