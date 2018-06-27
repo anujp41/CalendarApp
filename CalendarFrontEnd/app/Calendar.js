@@ -51,7 +51,7 @@ class CalendarPage extends Component {
   renderCell(cellNum) {
     const { firstDayMonth, lastDateMonth } = this.state;
     if (firstDayMonth < cellNum && (cellNum-firstDayMonth) <= lastDateMonth) {
-      return <td key={cellNum} className='date has-date' id='borderless' onClick={()=>this.toggleModal(cellNum-firstDayMonth)}>{cellNum-firstDayMonth}{this.checkEvents(cellNum-firstDayMonth)}</td>;
+      return <td key={cellNum} className='date has-date' onClick={()=>this.toggleModal(cellNum-firstDayMonth)}>{cellNum-firstDayMonth}{this.checkEvents(cellNum-firstDayMonth)}</td>;
     } else {
       return <td key={cellNum} className='date'></td>;
     }
@@ -75,10 +75,6 @@ class CalendarPage extends Component {
     }
     return dateTable;
   }
-
-  // componentDidMount() {
-  //   this.props.getData();
-  // }
 
   componentWillMount() {
     const today = new Date();
@@ -137,7 +133,7 @@ class CalendarPage extends Component {
         </table>
         {this.state.showModal && <CalendarEventModal method='submit' showModal={this.state.showModal} toggleModal={this.toggleModal} fullDate={{year: this.state.year, month: this.state.month+1, date: this.state.date}}/>}
 
-        <EventList month={this.months[this.state.month]} maxDate={this.state.lastDateMonth}/>
+        {/* <EventList month={this.months[this.state.month]} maxDate={this.state.lastDateMonth}/> */}
 
       </div>
     )
