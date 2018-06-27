@@ -116,7 +116,6 @@ class CalendarPage extends Component {
   }
 
   render() {
-    console.log(this.state.lastDateMonth)
     return (
       <div className='container calendar'>
         <div className='month-year'>
@@ -136,7 +135,7 @@ class CalendarPage extends Component {
             {this.renderTable().map((dateRow, idx)=><tr key={idx}>{dateRow}</tr>)}
           </tbody>
         </table>
-        {this.state.showModal && <CalendarEventModal method='submit' showModal={this.state.showModal} toggleModal={this.toggleModal} date={this.state.date}/>}
+        {this.state.showModal && <CalendarEventModal method='submit' showModal={this.state.showModal} toggleModal={this.toggleModal} fullDate={{year: this.state.year, month: this.state.month+1, date: this.state.date}}/>}
 
         <EventList month={this.months[this.state.month]}/>
 

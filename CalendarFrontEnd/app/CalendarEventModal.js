@@ -7,6 +7,7 @@ class CalendarEventModal extends Component {
 
   constructor(props) {
     super(props);
+    this.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     this.genDate = this.genDate.bind(this);
     this.genTimeArray = this.genTimeArray.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -38,9 +39,11 @@ class CalendarEventModal extends Component {
   handleSubmit(event) {
     event.preventDefault();
     const state = this.state;
+    const { year, month, date} = this.props.fullDate;
+    const dateOfEvent = month+'/'+date+'/'+year;
     if (this.props.method==='submit') {
       const {id, ...state} = this.state;
-      state.eventDate = this.props.date;
+      state.eventDate = dateOfEvent;
       this.props.submit(state);
     } else {
       this.props.update(state, this.props.event.eventDate, this.props.idx);
@@ -100,14 +103,14 @@ class CalendarEventModal extends Component {
       return null;
     }
     const {description, eventDate, startTime, endTime} = this.state;
-    const {date, method} = this.props;
+    const {fullDate, method} = this.props;
     return (
       <div className='backdrop'>
         <div className='container containerModal' ref={node=>this.node=node}>
           <button className='cancelbtn' onClick={()=>this.props.toggleModal()}>Cancel</button>
 
           {method === 'submit' 
-          ? <h5 className='modal-title'>Enter event details below for Feb {date}:</h5>
+          ? <h5 className='modal-title'>Enter event details below for {this.months[fullDate.month-1]} {fullDate.date}:</h5>
           : <h5 className='modal-title'>Update your event below:</h5>}
 
           <form className='formBody' autoComplete="off" onSubmit={this.handleSubmit}>
