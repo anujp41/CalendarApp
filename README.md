@@ -18,6 +18,8 @@ You can see the webapge at `http://localhost:3000/`
 
 # Architecture
 
+Please refer to the `master` branch on the GitHub repo for code.
+
 ## Front-End
 
 Calendar component shows the calendar on the front-screen; user can interact with this component to add events to a give date and on adding an event. Calendar also lists the events within each date; on clicking listed events on a given date, user can update or delete events.
