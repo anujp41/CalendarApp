@@ -109,6 +109,7 @@ class CalendarEventModal extends Component {
   }
 
   render() {
+    console.log('props: ', this.props)
     if(!this.props.showModal) {
       return null;
     }

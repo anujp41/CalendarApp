@@ -16,26 +16,35 @@ class CalendarPage extends Component {
     this.renderCell = this.renderCell.bind(this);
     this.renderRow = this.renderRow.bind(this);
     this.renderTable = this.renderTable.bind(this);
-    this.toggleModal = this.toggleModal.bind(this);
+    this.toggleSubmitModal = this.toggleSubmitModal.bind(this);
+    this.toggleUpdateModal = this.toggleUpdateModal.bind(this);
     this.updateDateState = this.updateDateState.bind(this);
     this.handlePrevNext = this.handlePrevNext.bind(this);
     this.days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     this.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     this.state = {
-      showModal: false,
+      showSubmitModal: false,
+      showUpdateModal: false,
       date: null,
       events: {},
       today: null,
       year: null,
       month: null,
       firstDayMonth: null,
-      lastDateMonth: null
+      lastDateMonth: null,
+      event: null,
+      idx: null
     }
   }
 
-  toggleModal(date=null) {
-    const {showModal} = this.state;
-    this.setState({ showModal: !showModal, date })
+  toggleSubmitModal(date=null) {
+    const {showSubmitModal} = this.state;
+    this.setState({ showSubmitModal: !showSubmitModal, date })
+  }
+
+  toggleUpdateModal(event=null, idx=null) {
+    const {showUpdateModal} = this.state;
+    this.setState({ showUpdateModal: !showUpdateModal, event, idx })
   }
 
   renderDaysHeader(day) {
@@ -43,10 +52,9 @@ class CalendarPage extends Component {
   }
 
   renderEvents(events) {
-    console.log('events: ', events)
     return (
       events.map((event, i) => 
-        <div key={i} className='event-desc'>
+        <div key={i} className='event-desc' onClick={()=>this.toggleUpdateModal(event, i)}>
           <span><b>{event.startTime}</b></span> <span>{event.description}</span>
         </div>
       )
@@ -57,7 +65,7 @@ class CalendarPage extends Component {
     const { events } = this.props;
     return (
       <div className='date-detail'>
-        <div className='event-entry' onClick={()=>this.toggleModal(date)}>{date}</div>
+        <div className='event-entry' onClick={()=>this.toggleSubmitModal(date)}>{date}</div>
         {(date in events) && <div className='event-num'>{this.renderEvents(events[date])}</div>}
       </div>
     )
@@ -127,6 +135,7 @@ class CalendarPage extends Component {
   }
 
   render() {
+    const {event, idx} = this.state;
     return (
       <div className='container calendar'>
         <div className='month-year'>
@@ -146,9 +155,8 @@ class CalendarPage extends Component {
             {this.renderTable().map((dateRow, idx)=><tr key={idx} className='calendar-row'>{dateRow}</tr>)}
           </tbody>
         </table>
-        {this.state.showModal && <CalendarEventModal method='submit' showModal={this.state.showModal} toggleModal={this.toggleModal} fullDate={{year: this.state.year, month: this.state.month+1, date: this.state.date}}/>}
-
-        {/* <EventList month={this.months[this.state.month]} maxDate={this.state.lastDateMonth}/> */}
+        {this.state.showSubmitModal && <CalendarEventModal method='submit' showModal={this.state.showSubmitModal} toggleModal={this.toggleSubmitModal} fullDate={{year: this.state.year, month: this.state.month+1, date: this.state.date}}/>}
+        {this.state.showUpdateModal && <CalendarEventModal method='update' showModal={this.state.showUpdateModal} toggleModal={this.toggleUpdateModal} event={event} idx={idx} maxDate={this.state.lastDateMonth}/>}
 
       </div>
     )
