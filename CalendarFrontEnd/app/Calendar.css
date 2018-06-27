@@ -94,7 +94,6 @@
 }
 
 .date-detail {
-  /* display: inline-block; */
   width: 100%;
   height: 100%;
 }
@@ -112,6 +111,15 @@
   width: 100%;
   height: 70%;
   font-size: 8px;
-  background-color: lightcoral;
   overflow: auto;
+}
+
+.event-desc {
+  font-size: 11px;
+  cursor: pointer;
+  border-bottom: 0.5px dashed white;
+}
+
+.event-desc:hover {
+  background-color: thistle
 }

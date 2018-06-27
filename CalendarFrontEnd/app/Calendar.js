@@ -10,6 +10,7 @@ class CalendarPage extends Component {
 
   constructor() {
     super();
+    this.renderEvents = this.renderEvents.bind(this);
     this.checkEvents = this.checkEvents.bind(this);
     this.renderDaysHeader = this.renderDaysHeader.bind(this);
     this.renderCell = this.renderCell.bind(this);
@@ -41,12 +42,23 @@ class CalendarPage extends Component {
     return <th key={day} scope='col' className='col-sm-1 days'>{day}</th>;
   }
 
+  renderEvents(events) {
+    console.log('events: ', events)
+    return (
+      events.map((event, i) => 
+        <div key={i} className='event-desc'>
+          <span><b>{event.startTime}</b></span> <span>{event.description}</span>
+        </div>
+      )
+    )
+  }
+
   checkEvents(date) {
     const { events } = this.props;
     return (
       <div className='date-detail'>
         <div className='event-entry' onClick={()=>this.toggleModal(date)}>{date}</div>
-        {(date in events) && <div className='event-num'>{events[date].length} events(s) today!</div>}
+        {(date in events) && <div className='event-num'>{this.renderEvents(events[date])}</div>}
       </div>
     )
   }
