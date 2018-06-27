@@ -10,6 +10,7 @@ class CalendarEventModal extends Component {
     this.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     this.genDate = this.genDate.bind(this);
     this.genTimeArray = this.genTimeArray.bind(this);
+    this.convertDateObj = this.convertDateObj.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -26,7 +27,7 @@ class CalendarEventModal extends Component {
     const target = event.target;
     const name = target.name;
     const value = target.value;
-    if (name === 'startTime' && value === '24:00') {
+    if (name === 'startTime' && value === '11:30 PM') {
       alert('Please select an earlier time as events must start and end on the same day!');
       return;
     }
@@ -39,7 +40,7 @@ class CalendarEventModal extends Component {
       const eventDate = new Date(currYear, currMonth, date);
       this.setState({ eventDate });
     }
-    if (name === 'startTime' && this.state.endTime < value) {
+    if (name === 'startTime' && this.convertDateObj(this.state.endTime) < this.convertDateObj(value)) {
       this.setState({ endTime: value });
     }
   }
@@ -68,28 +69,28 @@ class CalendarEventModal extends Component {
     return dateArray;
   }
 
-  genTimeArray(startTime=0) {
-    //inner function created as this is only ingested within genTimeArray method
-    const checkNumLength = num => {
-      const numStr = num.toString();
-      return numStr.length < 2 ? 0+numStr : numStr;
+  convertDateObj(time) {
+    let timeHHMM = time.split(':');
+    let hour = parseInt(timeHHMM[0]);
+    let min = parseInt(timeHHMM[1].slice(0,2));
+    let ampm = timeHHMM[1].slice(-2);
+    if (ampm === 'PM') hour += 12;
+    return new Date(2018, 5, 27, hour, min, 0, 0);
+  }
+
+  genTimeArray(startTime = null) {
+    let initialDate = null;
+    if (startTime) {
+      initialDate = this.convertDateObj(startTime);
+    } else {
+      initialDate = new Date(2018, 5, 27, 0, 0, 0, 0);
     }
-
-    const times = ['Select:']; //set up array to store time in 30min increments
-
-    if (startTime !== 0) {
-      const timeArr = startTime.split(':').map(numStr => parseInt(numStr));
-      startTime = (timeArr[0]*60)+(timeArr[1]);
+    const timeArr = [];
+    while (initialDate.getDate()<28) {
+      timeArr.push(initialDate.toLocaleTimeString('en-US', {hour: '2-digit', minute:'2-digit'}));
+      initialDate.setMinutes(initialDate.getMinutes()+30);
     }
-
-    for (let i = startTime; i <= 24*60; i=i+30) {
-      const hour = Math.floor(i/60);
-      const min = i-(hour*60);
-      const currTime = `${checkNumLength(hour)}:${checkNumLength(min)}`;
-      times.push(currTime);
-    }
-
-    return times;
+    return timeArr;
   }
 
   componentWillMount() {
