@@ -12,6 +12,8 @@ After you clone the repo and navigate to the folder that contains the repo:
     npm run seed
     npm start
 
+> If `npm start` gives error (which happened to me once out of 20+ tries, please run in developer mode using `npm run start-dev`) - Apologize in advance if this happens!
+
 You can see the webapge at `http://localhost:3000/`
 
 # Architecture
