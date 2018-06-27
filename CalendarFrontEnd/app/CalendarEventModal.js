@@ -54,9 +54,6 @@ class CalendarEventModal extends Component {
       state.eventDate = dateOfEvent;
       this.props.submit(state);
     } else {
-      console.log(`updating: {\n
-        initialDate: ${new Date(this.props.event.eventDate).getDate()},\n
-        ID in array: ${this.state.id}`)
       this.props.update(state, new Date(this.props.event.eventDate).getDate(), this.props.idx);
     }
     this.props.toggleModal();

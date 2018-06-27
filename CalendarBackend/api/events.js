@@ -23,7 +23,6 @@ const updateJSONObject = events => {
 // GET request handler
 router.get('/:year/:month/:maxDate', function (req, res, next) {
   const { year, month, maxDate } = req.params;
-  // console.log(`year: ${year}, month: ${month}, maxDate: ${maxDate}`)
   Events.findAll({
     where: {
       eventDate: {
