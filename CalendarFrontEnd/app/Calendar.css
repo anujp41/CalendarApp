@@ -99,7 +99,10 @@
 }
 
 .event-entry {
-  height: 30%;
+  height: 25px;
+  font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+  font-size: 125%;
+  font-weight: bolder;
 }
 
 .event-entry:hover {
