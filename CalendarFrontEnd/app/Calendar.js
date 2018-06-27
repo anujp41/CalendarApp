@@ -76,9 +76,9 @@ class CalendarPage extends Component {
     return dateTable;
   }
 
-  componentDidMount() {
-    this.props.getData();
-  }
+  // componentDidMount() {
+  //   this.props.getData();
+  // }
 
   componentWillMount() {
     const today = new Date();
@@ -91,6 +91,7 @@ class CalendarPage extends Component {
     const firstDayMonth = new Date(year, month, 1).getDay();
     const lastDateMonth = new Date(year, month+1, 0).getDate();
     this.setState({ today, year, month, firstDayMonth, lastDateMonth });
+    this.props.getData(year, month, lastDateMonth);
   }
 
   handlePrevNext(event) {
@@ -134,9 +135,9 @@ class CalendarPage extends Component {
             {this.renderTable().map((dateRow, idx)=><tr key={idx}>{dateRow}</tr>)}
           </tbody>
         </table>
-        {this.state.showModal && <CalendarEventModal method='submit' showModal={this.state.showModal} toggleModal={this.toggleModal} date={this.state.date}/>}
+        {this.state.showModal && <CalendarEventModal method='submit' showModal={this.state.showModal} toggleModal={this.toggleModal} fullDate={{year: this.state.year, month: this.state.month+1, date: this.state.date}}/>}
 
-        <EventList month={this.months[this.state.month]}/>
+        <EventList month={this.months[this.state.month]} maxDate={this.state.lastDateMonth}/>
 
       </div>
     )
@@ -151,8 +152,8 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    getData() {
-      dispatch(getEventsThunk());
+    getData(year, month, maxDateMonth) {
+      dispatch(getEventsThunk(year, month, maxDateMonth));
     }
   }
 }

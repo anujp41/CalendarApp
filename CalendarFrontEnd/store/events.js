@@ -49,8 +49,8 @@ export const createEventThunk = event => dispatch =>
   .then(event => dispatch(createEvent(event.data)))
   .catch(err => console.log(err));
 
-export const getEventsThunk = () => dispatch =>
-  axios.get('http://localhost:3000/api/events')
+export const getEventsThunk = (year, month, maxDateMonth) => dispatch =>
+  axios.get(`http://localhost:3000/api/events/${year}/${month+1}/${maxDateMonth}`)
   .then(events => dispatch(getEvents(events.data)))
   .catch(err => console.log(err));
 
@@ -77,7 +77,7 @@ export default function (state = initialState, action) {
       return action.events;
     case UPDATE_EVENT:
       const initialDate = action.date;
-      const currEventDate = Object.keys(action.event)[0];
+      const currEventDate = parseInt(Object.keys(action.event)[0]);
       if (initialDate === currEventDate) {
         return updateState(state, initialDate, action.idx, action.event, currEventDate);
       } else {

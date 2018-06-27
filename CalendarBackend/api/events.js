@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const router = require('express').Router();
 const { Events } = require('../models');
 
@@ -11,7 +12,8 @@ const updateJSONObject = events => {
   }
   const eventObj = {};
   for (let event of eventArr) {
-    eventObj[event.eventDate] ? eventObj[event.eventDate].push(event) : eventObj[event.eventDate] = [event];
+    const date = event.eventDate.getDate();
+    eventObj[date] ? eventObj[date].push(event) : eventObj[date] = [event];
   }
   return eventObj;
 }
@@ -19,8 +21,16 @@ const updateJSONObject = events => {
 /* Each of the handlers (except DELETE) call the updateJSONObject function above
     to modify the return JSON value in a JSON value with different key value */
 // GET request handler
-router.get('/', function (req, res, next) {
-  Events.findAll()
+router.get('/:year/:month/:maxDate', function (req, res, next) {
+  const { year, month, maxDate } = req.params;
+  Events.findAll({
+    where: {
+      eventDate: {
+        [Op.gte]: new Date(`${year}-${month}-1`),
+        [Op.lte]: new Date(`${year}-${month}-${maxDate}`)
+      }
+    }
+  })
   .then(events => res.json(updateJSONObject(events)))
   .catch(next);
 });
@@ -34,11 +44,11 @@ router.post('/', function (req, res, next) {
 
 // PUT request handler
 router.put('/:id', (req, res, next) => {
-  let id = req.params.id;
+  let {id} = req.params;
   Events.findById(id)
-      .then(event => event.update(req.body))
-      .then(updatedEvent => res.json(updateJSONObject(updatedEvent)))
-      .catch(next)
+  .then(event => event.update(req.body))
+  .then(updatedEvent => res.json(updateJSONObject(updatedEvent)))
+  .catch(next)
 })
 
 // DELETE request handler

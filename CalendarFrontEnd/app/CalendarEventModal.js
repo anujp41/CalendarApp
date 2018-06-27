@@ -7,6 +7,7 @@ class CalendarEventModal extends Component {
 
   constructor(props) {
     super(props);
+    this.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     this.genDate = this.genDate.bind(this);
     this.genTimeArray = this.genTimeArray.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -15,7 +16,7 @@ class CalendarEventModal extends Component {
     this.state = {
       id: this.props.method === 'submit' ? null : this.props.event.id,
       description: this.props.method === 'submit'? '' : this.props.event.description,
-      eventDate: this.props.method === 'submit' ? null : this.props.event.eventDate,
+      eventDate: this.props.method === 'submit' ? null : new Date(this.props.event.eventDate),
       startTime: this.props.method === 'submit' ? 'Select:' : this.props.event.startTime,
       endTime: this.props.method === 'submit' ? 'Select:' : this.props.event.endTime
     }
@@ -29,7 +30,15 @@ class CalendarEventModal extends Component {
       alert('Please select an earlier time as events must start and end on the same day!');
       return;
     }
-    this.setState({ [name] : value});
+    if (name !== 'eventDate') {
+      this.setState({ [name] : value});
+    } else {
+      const currYear = this.state.eventDate.getFullYear();
+      const currMonth = this.state.eventDate.getMonth();
+      const date = value;
+      const eventDate = new Date(currYear, currMonth, date);
+      this.setState({ eventDate });
+    }
     if (name === 'startTime' && this.state.endTime < value) {
       this.setState({ endTime: value });
     }
@@ -39,18 +48,21 @@ class CalendarEventModal extends Component {
     event.preventDefault();
     const state = this.state;
     if (this.props.method==='submit') {
+      const { year, month, date} = this.props.fullDate;
+      const dateOfEvent = month+'/'+date+'/'+year;
       const {id, ...state} = this.state;
-      state.eventDate = this.props.date;
+      state.eventDate = dateOfEvent;
       this.props.submit(state);
     } else {
-      this.props.update(state, this.props.event.eventDate, this.props.idx);
+      this.props.update(state, new Date(this.props.event.eventDate).getDate(), this.props.idx);
     }
     this.props.toggleModal();
   }
 
   genDate() {
     const dateArray = [];
-    for (let i = 1; i < 29; i++) {
+    const { maxDate } = this.props;
+    for (let i = 1; i < maxDate+1; i++) {
       dateArray.push(i);
     }
     return dateArray;
@@ -100,14 +112,14 @@ class CalendarEventModal extends Component {
       return null;
     }
     const {description, eventDate, startTime, endTime} = this.state;
-    const {date, method} = this.props;
+    const {fullDate, method} = this.props;
     return (
       <div className='backdrop'>
         <div className='container containerModal' ref={node=>this.node=node}>
           <button className='cancelbtn' onClick={()=>this.props.toggleModal()}>Cancel</button>
 
           {method === 'submit' 
-          ? <h5 className='modal-title'>Enter event details below for Feb {date}:</h5>
+          ? <h5 className='modal-title'>Enter event details below for {this.months[fullDate.month-1]} {fullDate.date}:</h5>
           : <h5 className='modal-title'>Update your event below:</h5>}
 
           <form className='formBody' autoComplete="off" onSubmit={this.handleSubmit}>
@@ -121,8 +133,8 @@ class CalendarEventModal extends Component {
             {method!=='submit' &&
             <div className='time-dropdown'>
               <div className='label-text'>Event Date:</div>
-              <select className='time-input-dropdown' name='eventDate' value={eventDate} onChange={this.handleChange}>
-                  {this.genDate().map((date, idx) => <option key={idx} defaultValue={eventDate}>{date}</option>)}
+              <select className='time-input-dropdown' name='eventDate' value={new Date(eventDate).getDate()} onChange={this.handleChange}>
+                  {this.genDate().map((date, idx) => <option key={idx} defaultValue={new Date(eventDate).getDate()}>{date}</option>)}
                 </select>
             </div>}
 

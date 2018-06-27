@@ -7,7 +7,7 @@ const Events = db.define('event', {
     allowNull: false
   },
   eventDate: {
-    type: Sequelize.STRING,
+    type: Sequelize.DATE,
     allowNull: false
   },
   startTime: {
