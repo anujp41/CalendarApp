@@ -10,6 +10,7 @@ class CalendarEventModal extends Component {
     this.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     this.genDate = this.genDate.bind(this);
     this.genTimeArray = this.genTimeArray.bind(this);
+    this.convertDateObj = this.convertDateObj.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -39,7 +40,7 @@ class CalendarEventModal extends Component {
       const eventDate = new Date(currYear, currMonth, date);
       this.setState({ eventDate });
     }
-    if (name === 'startTime' && this.state.endTime < value) { //this doesn't work with the new genArrayTime function; to check if time allows
+    if (name === 'startTime' && this.convertDateObj(this.state.endTime) < this.convertDateObj(value)) {
       this.setState({ endTime: value });
     }
   }
@@ -68,15 +69,19 @@ class CalendarEventModal extends Component {
     return dateArray;
   }
 
+  convertDateObj(time) {
+    let timeHHMM = time.split(':');
+    let hour = parseInt(timeHHMM[0]);
+    let min = parseInt(timeHHMM[1].slice(0,2));
+    let ampm = timeHHMM[1].slice(-2);
+    if (ampm === 'PM') hour += 12;
+    return new Date(2018, 5, 27, hour, min, 0, 0);
+  }
+
   genTimeArray(startTime = null) {
     let initialDate = null;
     if (startTime) {
-      let timeHHMM = startTime.split(':');
-      let hour = parseInt(timeHHMM[0]);
-      let min = parseInt(timeHHMM[1].slice(0,2));
-      let ampm = timeHHMM[1].slice(-2);
-      if (ampm === 'PM') hour += 12;
-      initialDate = new Date(2018, 5, 27, hour, min, 0, 0);
+      initialDate = this.convertDateObj(startTime);
     } else {
       initialDate = new Date(2018, 5, 27, 0, 0, 0, 0);
     }
@@ -109,7 +114,6 @@ class CalendarEventModal extends Component {
     }
     const {description, eventDate, startTime, endTime} = this.state;
     const {fullDate, method} = this.props;
-    console.log(this.state)
     return (
       <div className='backdrop'>
         <div className='container containerModal' ref={node=>this.node=node}>
