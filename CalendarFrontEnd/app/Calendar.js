@@ -55,7 +55,7 @@ class CalendarPage extends Component {
     return (
       events.map((event, i) => 
         <div key={i} className='event-desc' onClick={()=>this.toggleUpdateModal(event, i)}>
-          <span><b>{event.startTime}</b></span> <span>{event.description}</span>
+          <div><b>{event.startTime}-{event.endTime}</b></div> <div><i>{event.description}</i></div>
         </div>
       )
     )

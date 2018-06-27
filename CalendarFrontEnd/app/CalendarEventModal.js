@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './CalendarEventModal.css';
 import { connect } from "react-redux";
-import { createEventThunk, updateEventThunk } from '../store';
+import { createEventThunk, updateEventThunk, removeEventThunk } from '../store';
 
 class CalendarEventModal extends Component {
 
@@ -43,19 +43,23 @@ class CalendarEventModal extends Component {
     if (name === 'startTime' && this.convertDateObj(this.state.endTime) < this.convertDateObj(value)) {
       this.setState({ endTime: value });
     }
+    if (name === 'startTime' && this.state.endTime === 'Select:') {
+      this.setState({ endTime: value})
+    }
   }
 
   handleSubmit(event) {
-    event.preventDefault();
     const state = this.state;
-    if (this.props.method==='submit') {
+    if (event==='submit') {
       const { year, month, date} = this.props.fullDate;
       const dateOfEvent = month+'/'+date+'/'+year;
       const {id, ...state} = this.state;
       state.eventDate = dateOfEvent;
       this.props.submit(state);
-    } else {
+    } else if (event==='update') {
       this.props.update(state, new Date(this.props.event.eventDate).getDate(), this.props.idx);
+    } else {
+      this.props.delete(this.props.idx, new Date(this.props.event.eventDate).getDate(), this.state.id);
     }
     this.props.toggleModal();
   }
@@ -109,7 +113,6 @@ class CalendarEventModal extends Component {
   }
 
   render() {
-    console.log('props: ', this.props)
     if(!this.props.showModal) {
       return null;
     }
@@ -124,7 +127,7 @@ class CalendarEventModal extends Component {
           ? <h5 className='modal-title'>Enter event details below for {this.months[fullDate.month-1]} {fullDate.date}:</h5>
           : <h5 className='modal-title'>Update your event below:</h5>}
 
-          <form className='formBody' autoComplete="off" onSubmit={this.handleSubmit}>
+          <form className='formBody' autoComplete="off">
 
             <div className='formfield'>
               <input required className="input" type="text" name="description" maxLength='50' value={description} onChange={this.handleChange}/>
@@ -155,7 +158,13 @@ class CalendarEventModal extends Component {
                 </select>
             </div>}
 
-            {endTime !== 'Select:' && <button className='button' type="submit" value="submit">{method}</button>}
+            {endTime !== 'Select:' && method==='submit' && <button className='button' onClick={()=>this.handleSubmit('submit')}>{method}</button>}
+
+            {endTime !== 'Select:' && method!=='submit' && 
+            <div className='button-group'>
+              <button className='button button-warning' onClick={()=>this.handleSubmit('update')}>Update</button>
+              <button className='button button-danger' onClick={()=>this.handleSubmit('delete')}>Delete</button>
+            </div>}
 
           </form>
         </div>
@@ -171,6 +180,9 @@ const mapDispatch = dispatch => {
     },
     update(event, initialDate, idx) {
       dispatch(updateEventThunk(event, initialDate, idx));
+    },
+    delete(idx, date, dbId) {
+      dispatch(removeEventThunk(idx, date, dbId));
     }
   }
 }

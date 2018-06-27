@@ -102,7 +102,7 @@
 }
 
 .button {
-  background-color: #5b4226;
+  background-color: #5cb85c;
   border-radius: 27px;
   color: white;
   cursor: pointer;
@@ -112,8 +112,24 @@
   transition: all 200ms;
 }
 
+.button-warning {
+  background-color: #f0ad4e;
+}
+
+.button-danger {
+  background-color: #d9534f
+}
+
 .button:hover {
   background-color: white;
   color: #61e887;
   outline: none
+}
+
+.button-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: auto;
+  width: 70%;
 }
