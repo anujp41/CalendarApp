@@ -76,9 +76,9 @@ class CalendarPage extends Component {
     return dateTable;
   }
 
-  componentDidMount() {
-    this.props.getData();
-  }
+  // componentDidMount() {
+  //   this.props.getData();
+  // }
 
   componentWillMount() {
     const today = new Date();
@@ -91,6 +91,7 @@ class CalendarPage extends Component {
     const firstDayMonth = new Date(year, month, 1).getDay();
     const lastDateMonth = new Date(year, month+1, 0).getDate();
     this.setState({ today, year, month, firstDayMonth, lastDateMonth });
+    this.props.getData(year, month, lastDateMonth);
   }
 
   handlePrevNext(event) {
@@ -115,6 +116,7 @@ class CalendarPage extends Component {
   }
 
   render() {
+    console.log(this.state.lastDateMonth)
     return (
       <div className='container calendar'>
         <div className='month-year'>
@@ -151,8 +153,8 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    getData() {
-      dispatch(getEventsThunk());
+    getData(year, month, maxDateMonth) {
+      dispatch(getEventsThunk(year, month, maxDateMonth));
     }
   }
 }

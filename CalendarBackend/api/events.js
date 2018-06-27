@@ -21,12 +21,14 @@ const updateJSONObject = events => {
 /* Each of the handlers (except DELETE) call the updateJSONObject function above
     to modify the return JSON value in a JSON value with different key value */
 // GET request handler
-router.get('/', function (req, res, next) {
+router.get('/:year/:month/:maxDate', function (req, res, next) {
+  const { year, month, maxDate } = req.params;
+  // console.log(`year: ${year}, month: ${month}, maxDate: ${maxDate}`)
   Events.findAll({
     where: {
       eventDate: {
-        [Op.gte]: new Date('2018-06-01'),
-        [Op.lte]: new Date('2018-06-31')
+        [Op.gte]: new Date(`${year}-${month}-1`),
+        [Op.lte]: new Date(`${year}-${month}-${maxDate}`)
       }
     }
   })
