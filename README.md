@@ -12,7 +12,6 @@ You can see the webapge at `http://localhost:3000/`
 
 # Architecture
 
-
 ## Front-End
 
 Calendar component shows the calendar on the front-screen; user can interact with this component to add events to a give date and on adding an event. Calendar also lists the events within each date; on clicking listed events on a given date, user can update or delete events.
@@ -40,12 +39,28 @@ I've shown below the basic structure of the modified back-end database that is c
 {[date1]: [{event1}, {event2}]}
 ```
 
-### Notes
+# Specs completed:
 
-1. Calendar app shows the month of Feb 2015 as this was the last February that started on Sunday; it made for a relatively easier way of showing the calendar
+Listed below are the specs required for this app on the Survey Monkey Application Build Form. I have cross out the specs that I have completed.
 
-2. An issue faced with this project was rerendering component; as react only does shallow comprarision I had to spend time looking how to force react to do deep comparision. An easy way to solve this was to use `Object.assign` prior to returning from redux store thereby ensuring that, on shallow comparision of nextProps, the components re-render.
+Must Have Specs
 
-3. Back-end database became complicated for `PUT` requests; I started updating the store in reducer. One way to uncomplicate this process is to call `GET` method after updating so we get the new store with manupulations done on the back-end rather on the store so out store is updated with the updated event value from the back-end
+* ~~The UI should have one month hard coded view (Pick any month)~~
+* ~~Ignore users/login, just have one hardcoded user~~
+* ~~Click on a day box, and be able to create a new event on that day which gets sent to the backend on clicking submit.~~
+    * ~~The form should have start time, end time, description and submit.~~
+    * ~~Once submit is clicked the form should disappear.~~
+    * ~~Event should now appear in that day’s box.~~
+    * ~~Events cannot span multiple days. Must start and end the same day.~~
+* ~~Show all events the user has on their calendar.~~
+* ~~The UI should have 4 rows of 7 boxes (simple case of a 28 day month).~~
+* ~~The application should communicate with an API backend using JSON. Don’t spend a lot of time on the UI making it look beautiful; just make it functional.~~
 
+Optional Specs (Not required; bonus points available for inclusion of one or more features)
 
+* ~~Switch between months~~
+* Week or day view
+* Handle events spanning multiple days
+* ~~Handle too many events to fit in your box UI on a given day.~~
+* ~~You should be able to update/delete events. How you implement this UX is up to you.~~
+* ~~The UI should have 5 rows of 7 boxes with the correct date on the correct days.~~
