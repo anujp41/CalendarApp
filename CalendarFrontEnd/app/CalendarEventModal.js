@@ -113,6 +113,7 @@ class CalendarEventModal extends Component {
     }
     const {description, eventDate, startTime, endTime} = this.state;
     const {fullDate, method} = this.props;
+    console.log(this.state)
     return (
       <div className='backdrop'>
         <div className='container containerModal' ref={node=>this.node=node}>
