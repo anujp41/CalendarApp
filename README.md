@@ -15,27 +15,27 @@ You can see the webapge at `http://localhost:3000/`
 
 ## Front-End
 
-    Calendar component shows the calendar on the front-screen; user can interact with this component to add events to a give date and on adding an event, Calendar component shows the number of events in a given date;
-    
-    CalendarEventModal is the modal opened when the user wants to add an event or edit an event; I am re-using the same modal in both cases using ternary operator to generate different headers, additional drowpdowns, and different button depending on the user;
+Calendar component shows the calendar on the front-screen; user can interact with this component to add events to a give date and on adding an event, Calendar component shows the number of events in a given date;
 
-    EventList is the footer that can be seen in the Calendar component; this component shows the list of all events in a given month and allows user to edit or remove particular events.
+CalendarEventModal is the modal opened when the user wants to add an event or edit an event; I am re-using the same modal in both cases using ternary operator to generate different headers, additional drowpdowns, and different button depending on the user;
+
+EventList is the footer that can be seen in the Calendar component; this component shows the list of all events in a given month and allows user to edit or remove particular events.
 
 ### Redux store
 
-    Redux store was created to help each of the front-end components have access to one true source data and ensures that all components have the most up-to-date information.
+Redux store was created to help each of the front-end components have access to one true source data and ensures that all components have the most up-to-date information.
 
-    Code for redux store is shown in `CalendarFrontEnd/store/` folder
+Code for redux store is shown in `CalendarFrontEnd/store/` folder
 
 ## Back-End
 
-    Back-end runs on Node.js with PostgreSQL and Sequelize as the ORM.
+Back-end runs on Node.js with PostgreSQL and Sequelize as the ORM.
 
-    As the assumption is one user, I only have an `Events` table that stores all the events as shown in `CalendarBackend/models/` folder. The `CalendarBackend/db/` initialized the database and contains the `seed.js` file that store the seed data for the back-end.
+As the assumption is one user, I only have an `Events` table that stores all the events as shown in `CalendarBackend/models/` folder. The `CalendarBackend/db/` initialized the database and contains the `seed.js` file that store the seed data for the back-end.
 
-    `CalendarBackend/api/` has all of the routes for each of the RESTful methods. This also has the `updateJSONObject` function that modifies data from back-end that can then be utilized by the front-end components.
+`CalendarBackend/api/` has all of the routes for each of the RESTful methods. This also has the `updateJSONObject` function that modifies data from back-end that can then be utilized by the front-end components.
 
-    I've shown below the basic structure of the modified back-end database that is consumed by front-end components. `date1` can be any date that has events stored by the user. The `date1` key has an array for its value; the array can then store any number of events for that date.
+I've shown below the basic structure of the modified back-end database that is consumed by front-end components. `date1` can be any date that has events stored by the user. The `date1` key has an array for its value; the array can then store any number of events for that date.
 
 ```javascript
 {[date1]: [{event1}, {event2}]}
