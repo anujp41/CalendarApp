@@ -1,17 +1,27 @@
 import axios from 'axios';
+import moment from 'moment';
 
 /* this function allows to add a new event object to state 
     whether or not state has a particular date as key */
-const mergeEventsToState = (priorState, newEvent) => {
-  const resultObj = {};
-  for (let key in priorState) {
-    if (!newEvent[key]) {
-      resultObj[key] = priorState[key];
-    } else {
-      resultObj[key] = [...priorState[key], ...newEvent[key]];
+const toDateObj = timeString => moment(timeString, 'hh:mm a');
+
+const mergeEventsToState = (priorState, newEvent, newEventDate) => {
+  newEvent = newEvent[newEventDate][0];
+  const targetDate = priorState[newEventDate];
+  const length = targetDate.length;
+  const startMoment = toDateObj(newEvent.startTime);
+  if (startMoment < toDateObj(targetDate[0].startTime)) {
+    targetDate.splice(0, 0, newEvent);
+  }
+  if (toDateObj(targetDate[length-1].startTime) < startMoment) {
+    targetDate.splice(length, 0, newEvent);
+  }
+  for (let i = 1; i < length-1; i++) {
+    if (startMoment < toDateObj(targetDate[i].startTime)) {
+      targetDate.splice(i, 0, newEvent);
     }
   }
-  return resultObj;
+  return Object.assign({}, priorState);
 }
     
 /* this function updates state; is called for both PUT and DELETE request
@@ -72,7 +82,7 @@ export default function (state = initialState, action) {
   switch (action.type) {
     case CREATE_EVENT:
       const date = Object.keys(action.event)[0];
-      return state.hasOwnProperty(date) ? mergeEventsToState(state, action.event) : {...state, ...action.event};
+      return state.hasOwnProperty(date) ? mergeEventsToState(state, action.event, date) : {...state, ...action.event};
     case GET_EVENTS:
       return action.events;
     case UPDATE_EVENT:
@@ -82,7 +92,7 @@ export default function (state = initialState, action) {
         return updateState(state, initialDate, action.idx, action.event, currEventDate);
       } else {
         const updatedState = updateState(state, initialDate, action.idx);
-        return updatedState.hasOwnProperty(currEventDate) ? mergeEventsToState(updatedState, action.event) : {...updatedState, ...action.event};
+        return updatedState.hasOwnProperty(currEventDate) ? mergeEventsToState(updatedState, action.event, currEventDate) : {...updatedState, ...action.event};
       }
     case REMOVE_EVENT:
       return updateState(state, action.date, action.idx);
