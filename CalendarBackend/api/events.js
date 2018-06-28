@@ -7,6 +7,8 @@ const updateJSONObject = events => {
   let eventArr = [];
   if (Array.isArray(events)) {
     eventArr = events.map(event => event.dataValues);
+    eventArr = eventArr.sort((prev, curr) => curr.startTime<prev.startTime ? 1: -1);
+
   } else {
     eventArr = [events.dataValues];
   }
