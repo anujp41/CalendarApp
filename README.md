@@ -1,3 +1,6 @@
+> Note added after submission deadline:
+> The `updates-after-submission` contains edits made after code was submitted; these updates ensure that events are displayed in ascending order (of their startTime) in calendar. However as this change was committed after submission, the `updates-after-submission` has not been merged with `master` branch.
+
 # Calendar App
 
 # Instructions for running the webapp
@@ -19,9 +22,6 @@ You can see the webapge at `http://localhost:3000/`
 # Architecture
 
 Please refer to the `master` branch on the GitHub repo for code.
-
-> Note added after submission deadline:
-> The `updates-after-submission` contains edits made after code was submitted; these updates ensure that events are displayed in ascending order (of their startTime) in calendar. However as this change was committed after submission, the `updates-after-submission` has not been merged with `master` branch.
 
 ## Front-End
 
