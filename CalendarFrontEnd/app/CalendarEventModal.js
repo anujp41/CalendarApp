@@ -43,11 +43,8 @@ class CalendarEventModal extends Component {
       const eventDate = new Date(currYear, currMonth, date);
       this.setState({ eventDate });
     }
-    if (name === 'startTime' && this.convertDateObj(this.state.endTime) < this.convertDateObj(value)) {
+    if (name === 'startTime' && (this.convertDateObj(this.state.endTime) < this.convertDateObj(value) || this.state.endTime === 'Select:')) {
       this.setState({ endTime: value });
-    }
-    if (name === 'startTime' && this.state.endTime === 'Select:') {
-      this.setState({ endTime: value})
     }
   }
 

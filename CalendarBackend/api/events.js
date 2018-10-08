@@ -1,12 +1,17 @@
 const { Op } = require('sequelize');
 const router = require('express').Router();
 const { Events } = require('../models');
+const moment = require('moment');
+
+//using moment.js library, get date obj to convert below
+const toDateObj = timeString => moment(timeString, 'hh:mm a');
 
 //function changes database results from simple JSON to complicated that can be used by front-end
 const updateJSONObject = events => {
   let eventArr = [];
   if (Array.isArray(events)) {
     eventArr = events.map(event => event.dataValues);
+    eventArr = eventArr.sort((prev, curr) => toDateObj(curr.startTime) < toDateObj(prev.startTime) ? 1 : -1);
   } else {
     eventArr = [events.dataValues];
   }
