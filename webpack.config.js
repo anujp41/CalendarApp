@@ -26,7 +26,7 @@ module.exports = {
   plugins: [
     new BrowserSyncPlugin({
       host: 'localhost',
-      port: 3000,
+      port: 3001,
       server: { baseDir: ['public'] }
     })
   ]

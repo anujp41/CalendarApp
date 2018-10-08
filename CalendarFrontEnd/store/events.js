@@ -6,7 +6,9 @@ import moment from 'moment';
 const toDateObj = timeString => moment(timeString, 'hh:mm a');
 
 const mergeEventsToState = (priorState, newEvent, newEventDate) => {
+  console.log('before ', newEvent)
   newEvent = newEvent[newEventDate][0];
+  console.log('after ', newEvent)
   const targetDate = priorState[newEventDate];
   const length = targetDate.length;
   const startMoment = toDateObj(newEvent.startTime);
